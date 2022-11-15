@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9207ba5a-d574-432f-ba34-0da548a54480" name="Default Changelist" comment=" # 0.14.1 Правка вычитки результатов циклограммы&#10;  - Поправлена вычитка результатов циклограммы">
+      <change afterPath="$PROJECT_DIR$/CAN-USB_Config/LM PN20.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CAN-USB_Config/Norby LM on_off.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/untitled.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/lm_debug_client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lm_debug_client.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CAN-USB_init.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/CAN-USB_init.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cyclogram/2020_05_20 14-40-04 Cyclogram_Result .txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cyclogram/2020_05_20 14-40-10 Cyclogram_Result .txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cyclogram/2020_05_20 14-42-09 Cyclogram_Result .txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cyclogram/2020_05_20 14-43-13 Cyclogram_Result .txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_vis.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_vis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_vis_widget.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_vis_widget.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_vis_widget.ui" beforeDir="false" afterPath="$PROJECT_DIR$/data_vis_widget.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lm_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/lm_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lm_debug_client/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/lm_debug_client/main.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_win.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_win.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_win.ui" beforeDir="false" afterPath="$PROJECT_DIR$/main_win.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay_load.py" beforeDir="false" afterPath="$PROJECT_DIR$/pay_load.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="qt_form" />
+        <option value="QtForm" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="1YOOAgtMZ0ZSyZV8DZ5m6kw65U1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/Logs/2020_05_29 Cyclogram/2020_05_29 12-54-17 Cyclogram_Result .txt&#10;D:/YandexDisk/Work/Python/pyqt_based/lm_debug_client/Logs/2020_05_29 Cyclogram/2020_05_29 12-28-09 Cyclogram_Result .txt" />
+    <property name="ignore_missing_gitignore" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\YandexDisk\Work\Python\pyqt_based\lm_debug_client" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\YandexDisk\Work\Python\pyqt_based" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.data_vis">
+    <configuration name="data_vis" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_vis.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="data_vis_unit" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_vis_unit.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="lm_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lm_data.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Python39-32\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pay_load" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pay_load.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.data_vis" />
+      <item itemvalue="Python.lm_data" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.pay_load" />
+      <item itemvalue="Python.data_vis_unit" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.data_vis" />
+        <item itemvalue="Python.data_vis_unit" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.pay_load" />
+        <item itemvalue="Python.lm_data" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",SHOW_FIELDS" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9207ba5a-d574-432f-ba34-0da548a54480" name="Default Changelist" comment="" />
+      <created>1580131737660</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1580131737660</updated>
+    </task>
+    <task id="LOCAL-00001" summary=" # 0.0 Initial commit&#10;  - добавил библиотеку для работы с USB-CAN bridge">
+      <created>1583985331516</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1583985331516</updated>
+    </task>
+    <task id="LOCAL-00002" summary=" # 0.1 Правка нескольких ошибок&#10;  - поправлена запись в CAN">
+      <created>1584329289724</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584329289725</updated>
+    </task>
+    <task id="LOCAL-00003" summary=" # 0.2 Добавлен модуль для работы с графиками">
+      <created>1586158635867</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1586158635867</updated>
+    </task>
+    <task id="LOCAL-00004" summary=" # 0.4 Добавлен блок управлением ДеКоР (версия для отправки в ИСС)&#10;  - добавлен блок для управления ДеКоР&#10;  - добавлен конфигурация CAN для управления ДеКоР">
+      <created>1587964819481</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1587964819481</updated>
+    </task>
+    <task id="LOCAL-00005" summary=" # 0.5 Добавлен блок управлением ПН1.1_А&#10;  - реализовано управление ИКУ&#10;  - в разборе данных релизован разбор отдельных СТМ для ПН1.1&#10;  - сделаны заготовки полей для тестирования уровня приложений&#10;  - добавлен один конфигурационный файл для тестирования интерфейса общения с ПН1.1 через уровень приложения по средствам CAN">
+      <created>1588777031086</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1588777031086</updated>
+    </task>
+    <task id="LOCAL-00006" summary=" # 0.6 В блок упрваления ПН1.1 добавлено чтение и запись в память&#10;  - реализован интерфейс для общение с памятью ПН1.1&#10;  - поправлен ряд проблем с отображением графиков">
+      <created>1589114658114</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1589114658114</updated>
+    </task>
+    <task id="LOCAL-00007" summary=" # 0.7 Добален блок упраления ПН1.1Б&#10;  - добавлен блок упрвления ПН1.1Б&#10;  - добавлено чтение результатов циклограммы">
+      <created>1589720213679</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1589720213679</updated>
+    </task>
+    <task id="LOCAL-00008" summary=" # 0.7.1 Добален блок упраления ПН1.1Б&#10;  - добавлен блок упрвления ПН1.1Б&#10;  - добавлено чтение результатов циклограммы&#10;  - поправлен gitignore">
+      <created>1589720316821</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1589720316821</updated>
+    </task>
+    <task id="LOCAL-00009" summary=" # 0.8.1 Поправлены задержки на чтение данных от ПН1.1">
+      <created>1589896836829</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1589896836829</updated>
+    </task>
+    <task id="LOCAL-00010" summary=" # 0.9.1 Добавлен режим софтового повторения циклограмм">
+      <created>1589982848208</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1589982848208</updated>
+    </task>
+    <task id="LOCAL-00011" summary=" # 0.10.0 Добавлено синхронизация времени&#10;  - добавлена кнопка синхронизации времени&#10;  - добавлены поля данных с объемом памяти и указателем записи">
+      <created>1590134377899</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1590134377899</updated>
+    </task>
+    <task id="LOCAL-00012" summary=" # 0.11.0 Добавлено синхронизация времени&#10;  - поправлен модуль usb-can для лучшей совместимости работы CAN-USB-units с отложенным чтением и потоковым чтением данных в lm-data">
+      <created>1590395863760</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1590395863760</updated>
+    </task>
+    <task id="LOCAL-00013" summary=" # 0.12.0 Управление памятью&#10;  - добавлены общие команды управления: инициализация, форматирование памяти&#10;  - добавлена установка указтелей чтения&#10;  - добавлены режимы вычитывания памяти ПН">
+      <created>1590666392129</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1590666392129</updated>
+    </task>
+    <task id="LOCAL-00014" summary=" # 0.12.1 Управление памятью&#10;  - Добавлена остановка чтения памяти, что позволяет прервать процесс чтения&#10;  - Небольшое количество незначительных изменений">
+      <created>1590914057728</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1590914057728</updated>
+    </task>
+    <task id="LOCAL-00015" summary=" # 0.13.0 Програмная перезгрузка МС&#10;  - Добавлена кнопка програмной перезагрузки МС&#10;  - Поправлена система команд в соответствии с прошивкой МС 1.02">
+      <created>1591188123125</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1591188123125</updated>
+    </task>
+    <task id="LOCAL-00016" summary=" # 0.14.0 Переход от 16-битных слов к побайтовым&#10;  - Теперь разбор данных в norby_data побайтовый&#10;  - Соотеветственно вся передача данных также побайтовая">
+      <created>1591608944292</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1591608944292</updated>
+    </task>
+    <task id="LOCAL-00017" summary=" # 0.14.1 Правка вычитки результатов циклограммы&#10;  - Поправлена вычитка результатов циклограммы">
+      <created>1591618828137</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1591618828137</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:D:/YandexDisk/Work/Python/pyqt_based/lm_debug_client/Logs/2020_01_29 Log/2020_01_29 11-28-26 Log" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="2">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="3">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="4">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value=" # 0.0 Initial commit&#10;  - добавил библиотеку для работы с USB-CAN bridge" />
+    <MESSAGE value=" # 0.1 Правка нескольких ошибок&#10;  - поправлена запись в CAN" />
+    <MESSAGE value=" # 0.2 Добавлен модуль для работы с графиками" />
+    <MESSAGE value=" # 0.4 Добавлен блок управлением ДеКоР (версия для отправки в ИСС)&#10;  - добавлен блок для управления ДеКоР&#10;  - добавлен конфигурация CAN для управления ДеКоР" />
+    <MESSAGE value=" # 0.5 Добавлен блок управлением ПН1.1_А&#10;  - реализовано управление ИКУ&#10;  - в разборе данных релизован разбор отдельных СТМ для ПН1.1&#10;  - сделаны заготовки полей для тестирования уровня приложений&#10;  - добавлен один конфигурационный файл для тестирования интерфейса общения с ПН1.1 через уровень приложения по средствам CAN" />
+    <MESSAGE value=" # 0.6 В блок упрваления ПН1.1 добавлено чтение и запись в память&#10;  - реализован интерфейс для общение с памятью ПН1.1&#10;  - поправлен ряд проблем с отображением графиков" />
+    <MESSAGE value=" # 0.7 Добален блок упраления ПН1.1Б&#10;  - добавлен блок упрвления ПН1.1Б&#10;  - добавлено чтение результатов циклограммы" />
+    <MESSAGE value=" # 0.7.1 Добален блок упраления ПН1.1Б&#10;  - добавлен блок упрвления ПН1.1Б&#10;  - добавлено чтение результатов циклограммы&#10;  - поправлен gitignore" />
+    <MESSAGE value=" # 0.8.1 Поправлены задержки на чтение данных от ПН1.1" />
+    <MESSAGE value="# 0.8.1 Поправлены задержки на чтение данных от ПН1.1&#10; - добавлена команда и кнопки для управления режимом констант&#10; - поправлены ошибки задержки чтения данных через уровень приложения ПН1.1" />
+    <MESSAGE value=" # 0.9.1 Добавлен режим софтового повторения циклограмм" />
+    <MESSAGE value=" # 0.10.0 Добавлено синхронизация времени&#10;  - добавлена кнопка синхронизации времени&#10;  - добавлены поля данных с объемом памяти и указателем записи" />
+    <MESSAGE value=" # 0.11.0 Добавлено синхронизация времени&#10;  - поправлен модуль usb-can для лучшей совместимости работы CAN-USB-units с отложенным чтением и потоковым чтением данных в lm-data" />
+    <MESSAGE value=" # 0.12.0 Управление памятью&#10;  - добавлены общие команды управления: инициализация, форматирование памяти&#10;  - добавлена установка указтелей чтения&#10;  - добавлены режимы вычитывания памяти ПН" />
+    <MESSAGE value=" # 0.12.1 Управление памятью&#10;  - Добавлена остановка чтения памяти, что позволяет прервать процесс чтения&#10;  - Небольшое количество незначительных изменений" />
+    <MESSAGE value=" # 0.13.0 Програмная перезгрузка МС&#10;  - Добавлена кнопка програмной перезагрузки МС&#10;  - Поправлена система команд в соответствии с прошивкой МС 1.02" />
+    <MESSAGE value=" # 0.14.0 Переход от 16-битных слов к побайтовым&#10;  - Теперь разбор данных в norby_data побайтовый&#10;  - Соотеветственно вся передача данных также побайтовая" />
+    <MESSAGE value=" # 0.14.1 Правка вычитки результатов циклограммы&#10;  - Поправлена вычитка результатов циклограммы" />
+    <option name="LAST_COMMIT_MESSAGE" value=" # 0.14.1 Правка вычитки результатов циклограммы&#10;  - Поправлена вычитка результатов циклограммы" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="self.answer_data" />
+        <watch expression="answer_data_buffer" />
+        <watch expression="pl_iss_data" />
+        <watch expression="general_data" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>data</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+</project>

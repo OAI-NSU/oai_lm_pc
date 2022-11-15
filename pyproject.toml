@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "oai-lm-pc"
+version = "0.1.0"
+description = "PC client for the LinkingModule device with oai_lm_mcu software"
+authors = ["a-styuf <a-styuf@yandex.ru>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "oai_lm_pc"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+PyQt5 = "^5.15.7"
+pyqtgraph = "^0.13.1"
+pyserial = "^3.5"
+numpy = "^1.23.4"
+can_usb_client = {git = "https://github.com/a-styuf/can_usb_client/", rev = "master"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9207ba5a-d574-432f-ba34-0da548a54480" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/data_vis.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_vis_widget.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/lm_debug_client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lm_debug_client.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CAN-USB_Config/LM General.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CAN-USB_Config/test.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CAN-USB_init.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/can_unit.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/can_unit_widget.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/can_unit_widget.ui" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/can_usb_bridge_client_widget.ui" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/can_usb_bridge_client_win.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/can_usb_bridge_client_win.ui" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/create_py_from.bat" beforeDir="false" afterPath="$PROJECT_DIR$/create_py_from.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lm_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/lm_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_win.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_win.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_win.ui" beforeDir="false" afterPath="$PROJECT_DIR$/main_win.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/norby_data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyinstaller_setup.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/usb_can_bridge.py" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/main.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="460">
+                  <caret line="56" column="8" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="66" />
+                  <folding>
+                    <element signature="e#0#10#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/data_vis.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="255">
+                  <caret line="51" column="39" lean-forward="true" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
+                  <folding>
+                    <element signature="e#468#478#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/1706009523/PyQt5/QtWidgets/QTableWidget.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="229">
+                  <caret line="433" column="8" selection-start-line="433" selection-start-column="8" selection-end-line="433" selection-end-column="8" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/data_vis_unit.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="187">
+                  <caret line="11" column="38" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="38" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../can_usb_client/can_unit.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="376">
+                  <caret line="409" column="36" selection-start-line="409" selection-start-column="8" selection-end-line="409" selection-end-column="36" />
+                  <folding>
+                    <element signature="e#0#10#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/main.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="170">
+                  <caret line="10" column="62" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="62" />
+                  <folding>
+                    <element signature="e#0#10#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="qt_form" />
+        <option value="Python Script" />
+        <option value="QtForm" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>time</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/data_visualisation.py" />
+        <option value="$PROJECT_DIR$/еуые.py" />
+        <option value="$PROJECT_DIR$/create_py_from.bat" />
+        <option value="$PROJECT_DIR$/../can_usb_client/can_unit.py" />
+        <option value="$PROJECT_DIR$/../can_usb_client/can_usb_bridge_client_win.py" />
+        <option value="$PROJECT_DIR$/data_vis.py" />
+      </list>
+    </option>
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="D:\YandexDisk\Work\Python\pyqt_based\lm_debug_client\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="55" />
+    <option name="y" value="-9" />
+    <option name="width" value="2514" />
+    <option name="height" value="1457" />
+  </component>
+  <component name="ProjectId" id="1YOOAgtMZ0ZSyZV8DZ5m6kw65U1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="lm_debug_client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lm_debug_client" type="47feb1d3:ProjectViewModuleNode" />
+            </path>
+            <path>
+              <item name="lm_debug_client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lm_debug_client" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="lm_debug_client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="lm_debug_client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lm_debug_client" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="can_usb_client" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../teplofizika/Inferno" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\YandexDisk\Work\Python\pyqt_based\lm_debug_client" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\YandexDisk\Work\Python\pyqt_based" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.data_vis">
+    <configuration name="еуые" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/еуые.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="can_unit" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/can_unit.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="data_vis" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_vis.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\a-sty\AppData\Local\Programs\Python\Python36\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="usb_can_bridge" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="D:\YandexDisk\Work\Python\pyqt_based\lm_debug_client\usb_can_bridge.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.data_vis" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.еуые" />
+        <item itemvalue="Python.can_unit" />
+        <item itemvalue="Python.usb_can_bridge" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9207ba5a-d574-432f-ba34-0da548a54480" name="Default Changelist" comment="" />
+      <created>1580131737660</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1580131737660</updated>
+    </task>
+    <task id="LOCAL-00001" summary=" # 0.0 Initial commit&#10;  - добавил библиотеку для работы с USB-CAN bridge">
+      <created>1583985331516</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1583985331516</updated>
+    </task>
+    <task id="LOCAL-00002" summary=" # 0.1 Правка нескольких ошибок&#10;  - поправлена запись в CAN">
+      <created>1584329289724</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584329289725</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="56" y="-7" width="2703" height="1166" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24934383" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31111112" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="9" weight="0.3294686" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32850242" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:D:/YandexDisk/Work/Python/pyqt_based/lm_debug_client/Logs/2020_01_29 Log/2020_01_29 11-28-26 Log" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+      </set>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value=" # 0.0 Initial commit&#10;  - добавил библиотеку для работы с USB-CAN bridge" />
+    <MESSAGE value=" # 0.1 Правка нескольких ошибок&#10;  - поправлена запись в CAN" />
+    <option name="LAST_COMMIT_MESSAGE" value=" # 0.1 Правка нескольких ошибок&#10;  - поправлена запись в CAN" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="966" y="315" key="CommitChangelistDialog2" timestamp="1584329287588">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state x="966" y="315" key="CommitChangelistDialog2/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1584329287588" />
+    <state x="162" y="93" width="2305" height="1255" key="DiffContextDialog" timestamp="1585224215848">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state x="162" y="93" width="2305" height="1255" key="DiffContextDialog/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1585224215848" />
+    <state x="1095" y="475" key="FileChooserDialogImpl" timestamp="1584004171254">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state x="1095" y="475" key="FileChooserDialogImpl/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1584004171254" />
+    <state width="2469" height="354" key="GridCell.Tab.0.bottom" timestamp="1585300943035">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state width="2539" height="354" key="GridCell.Tab.0.bottom/3909.0.2491.1440/69.0.2491.1440@3909.0.2491.1440" timestamp="1585191318187" />
+    <state width="2469" height="354" key="GridCell.Tab.0.bottom/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1585300943035" />
+    <state width="2469" height="354" key="GridCell.Tab.0.center" timestamp="1585300943035">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state width="2539" height="354" key="GridCell.Tab.0.center/3909.0.2491.1440/69.0.2491.1440@3909.0.2491.1440" timestamp="1585191318186" />
+    <state width="2469" height="354" key="GridCell.Tab.0.center/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1585300943035" />
+    <state width="2469" height="354" key="GridCell.Tab.0.left" timestamp="1585300943035">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state width="2539" height="354" key="GridCell.Tab.0.left/3909.0.2491.1440/69.0.2491.1440@3909.0.2491.1440" timestamp="1585191318186" />
+    <state width="2469" height="354" key="GridCell.Tab.0.left/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1585300943035" />
+    <state width="2469" height="354" key="GridCell.Tab.0.right" timestamp="1585300943035">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state width="2539" height="354" key="GridCell.Tab.0.right/3909.0.2491.1440/69.0.2491.1440@3909.0.2491.1440" timestamp="1585191318186" />
+    <state width="2469" height="354" key="GridCell.Tab.0.right/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1585300943035" />
+    <state x="816" y="363" key="SettingsEditor" timestamp="1583984460951">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state x="816" y="363" key="SettingsEditor/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1583984460951" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="frame[0]" />
+        <watch expression="frame[1]" />
+        <watch expression="packets_list" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/pyinstaller_setup.bat" />
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/2and3/time.pyi">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1189">
+          <caret selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../itb_pc_client/data_graph.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+          <folding>
+            <element signature="e#24#108#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/еуые.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="34" lean-forward="true" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_vis_widget.ui">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dnt_client/dnt_graph.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-544">
+          <caret line="18" column="125" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="125" />
+          <folding>
+            <element signature="e#24#108#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/1706009523/time.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="219" selection-start-line="219" selection-end-line="228" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="56" column="8" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_vis_unit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="38" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_win.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1876" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/create_py_from.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../can_usb_client/can_usb_bridge_client_win.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" selection-start-line="9" selection-end-line="28" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../can_usb_client/can_unit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="409" column="36" selection-start-line="409" selection-start-column="8" selection-end-line="409" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/1706009523/PyQt5/QtWidgets/QTableWidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="433" column="8" selection-start-line="433" selection-start-column="8" selection-end-line="433" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_vis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="51" column="39" lean-forward="true" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
+          <folding>
+            <element signature="e#468#478#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

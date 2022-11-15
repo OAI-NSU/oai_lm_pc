@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9207ba5a-d574-432f-ba34-0da548a54480" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/CAN-USB_Config/LM PL ISS Interface.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lm_debug_client/CAN-USB_Config/LM PL ISS Interface.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lm_debug_client/Logs/2020_05_12 CAN-USB_bridge/2020_05_12 11-31-08 CAN-USB_bridge/2020_05_12 11-31-08 CAN-USB_bridge can.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lm_debug_client/Logs/2020_05_12 CAN-USB_bridge/2020_05_12 11-31-08 CAN-USB_bridge/2020_05_12 11-31-08 CAN-USB_bridge serial.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lm_debug_client/Logs/2020_05_12 CAN-USB_bridge/2020_05_12 11-32-54 CAN-USB_bridge/2020_05_12 11-32-54 CAN-USB_bridge can.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lm_debug_client/Logs/2020_05_12 CAN-USB_bridge/2020_05_12 11-32-54 CAN-USB_bridge/2020_05_12 11-32-54 CAN-USB_bridge serial.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lm_debug_client/Logs/2020_05_12 Log/2020_05_12 11-31-08 Log/2020_05_12 11-31-08 Norby_LM .csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lm_debug_client/Logs/2020_05_12 Log/2020_05_12 11-32-54 Log/2020_05_12 11-32-54 Norby_LM .csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lm_debug_client/CAN-USB_init.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/lm_debug_client/CAN-USB_init.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lm_debug_client/lm_debug_client_v0_4_0.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lm_debug_client/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/lm_debug_client/main.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="qt_form" />
+        <option value="QtForm" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>time</find>
+      <find>p1</find>
+      <find>setLa</find>
+      <find>зфвв</find>
+      <find>serial</find>
+      <find>rint(error)</find>
+      <find>print(error)</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>self.pi</replace>
+      <replace>usb_can</replace>
+      <replace>self._print(error)</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="D:\YandexDisk\Work\Python\pyqt_based\lm_debug_client\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1YOOAgtMZ0ZSyZV8DZ5m6kw65U1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="ignore_missing_gitignore" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../teplofizika/Inferno" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\YandexDisk\Work\Python\pyqt_based\lm_debug_client" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\YandexDisk\Work\Python\pyqt_based" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration name="can_unit" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../can_usb_client" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../can_usb_client/can_unit.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="data_vis" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_vis.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="lm_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lm_data.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Python37\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="usb_can_bridge" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="lm_debug_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../can_usb_client" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../can_usb_client/usb_can_bridge.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.can_unit" />
+      <item itemvalue="Python.lm_data" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.usb_can_bridge" />
+      <item itemvalue="Python.data_vis" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.data_vis" />
+        <item itemvalue="Python.lm_data" />
+        <item itemvalue="Python.can_unit" />
+        <item itemvalue="Python.usb_can_bridge" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",SHOW_FIELDS" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9207ba5a-d574-432f-ba34-0da548a54480" name="Default Changelist" comment="" />
+      <created>1580131737660</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1580131737660</updated>
+    </task>
+    <task id="LOCAL-00001" summary=" # 0.0 Initial commit&#10;  - добавил библиотеку для работы с USB-CAN bridge">
+      <created>1583985331516</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1583985331516</updated>
+    </task>
+    <task id="LOCAL-00002" summary=" # 0.1 Правка нескольких ошибок&#10;  - поправлена запись в CAN">
+      <created>1584329289724</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584329289725</updated>
+    </task>
+    <task id="LOCAL-00003" summary=" # 0.2 Добавлен модуль для работы с графиками">
+      <created>1586158635867</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1586158635867</updated>
+    </task>
+    <task id="LOCAL-00004" summary=" # 0.4 Добавлен блок управлением ДеКоР (версия для отправки в ИСС)&#10;  - добавлен блок для управления ДеКоР&#10;  - добавлен конфигурация CAN для управления ДеКоР">
+      <created>1587964819481</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1587964819481</updated>
+    </task>
+    <task id="LOCAL-00005" summary=" # 0.5 Добавлен блок управлением ПН1.1_А&#10;  - реализовано управление ИКУ&#10;  - в разборе данных релизован разбор отдельных СТМ для ПН1.1&#10;  - сделаны заготовки полей для тестирования уровня приложений&#10;  - добавлен один конфигурационный файл для тестирования интерфейса общения с ПН1.1 через уровень приложения по средствам CAN">
+      <created>1588777031086</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1588777031086</updated>
+    </task>
+    <task id="LOCAL-00006" summary=" # 0.6 В блок упрваления ПН1.1 добавлено чтение и запись в память&#10;  - реализован интерфейс для общение с памятью ПН1.1&#10;  - поправлен ряд проблем с отображением графиков">
+      <created>1589114658114</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1589114658114</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:D:/YandexDisk/Work/Python/pyqt_based/lm_debug_client/Logs/2020_01_29 Log/2020_01_29 11-28-26 Log" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+      </set>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value=" # 0.0 Initial commit&#10;  - добавил библиотеку для работы с USB-CAN bridge" />
+    <MESSAGE value=" # 0.1 Правка нескольких ошибок&#10;  - поправлена запись в CAN" />
+    <MESSAGE value=" # 0.2 Добавлен модуль для работы с графиками" />
+    <MESSAGE value=" # 0.4 Добавлен блок управлением ДеКоР (версия для отправки в ИСС)&#10;  - добавлен блок для управления ДеКоР&#10;  - добавлен конфигурация CAN для управления ДеКоР" />
+    <MESSAGE value=" # 0.5 Добавлен блок управлением ПН1.1_А&#10;  - реализовано управление ИКУ&#10;  - в разборе данных релизован разбор отдельных СТМ для ПН1.1&#10;  - сделаны заготовки полей для тестирования уровня приложений&#10;  - добавлен один конфигурационный файл для тестирования интерфейса общения с ПН1.1 через уровень приложения по средствам CAN" />
+    <MESSAGE value=" # 0.6 В блок упрваления ПН1.1 добавлено чтение и запись в память&#10;  - реализован интерфейс для общение с памятью ПН1.1&#10;  - поправлен ряд проблем с отображением графиков" />
+    <option name="LAST_COMMIT_MESSAGE" value=" # 0.6 В блок упрваления ПН1.1 добавлено чтение и запись в память&#10;  - реализован интерфейс для общение с памятью ПН1.1&#10;  - поправлен ряд проблем с отображением графиков" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="770" y="375" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589355401901">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state x="770" y="375" key="#com.intellij.execution.impl.EditConfigurationsDialog/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1589355401901" />
+    <state x="966" y="315" key="CommitChangelistDialog2" timestamp="1587964818107">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state x="966" y="315" key="CommitChangelistDialog2/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1587964818107" />
+    <state x="162" y="93" width="2305" height="1255" key="DiffContextDialog" timestamp="1585224215848">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state x="162" y="93" width="2305" height="1255" key="DiffContextDialog/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1585224215848" />
+    <state x="1095" y="475" key="FileChooserDialogImpl" timestamp="1588051080081">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state x="1095" y="475" key="FileChooserDialogImpl/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1588051080081" />
+    <state x="1177" y="614" key="Github.ShareDialog" timestamp="1587964859982">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state x="1177" y="614" key="Github.ShareDialog/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1587964859982" />
+    <state width="2469" height="354" key="GridCell.Tab.0.bottom" timestamp="1589364291987">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state width="2539" height="354" key="GridCell.Tab.0.bottom/3909.0.2491.1440/69.0.2491.1440@3909.0.2491.1440" timestamp="1585191318187" />
+    <state width="2469" height="354" key="GridCell.Tab.0.bottom/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1589364291987" />
+    <state width="2469" height="354" key="GridCell.Tab.0.center" timestamp="1589364291986">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state width="2539" height="354" key="GridCell.Tab.0.center/3909.0.2491.1440/69.0.2491.1440@3909.0.2491.1440" timestamp="1585191318186" />
+    <state width="2469" height="354" key="GridCell.Tab.0.center/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1589364291986" />
+    <state width="2469" height="354" key="GridCell.Tab.0.left" timestamp="1589364291986">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state width="2539" height="354" key="GridCell.Tab.0.left/3909.0.2491.1440/69.0.2491.1440@3909.0.2491.1440" timestamp="1585191318186" />
+    <state width="2469" height="354" key="GridCell.Tab.0.left/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1589364291986" />
+    <state width="2469" height="354" key="GridCell.Tab.0.right" timestamp="1589364291987">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state width="2539" height="354" key="GridCell.Tab.0.right/3909.0.2491.1440/69.0.2491.1440@3909.0.2491.1440" timestamp="1585191318186" />
+    <state width="2469" height="354" key="GridCell.Tab.0.right/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1589364291987" />
+    <state x="816" y="363" key="SettingsEditor" timestamp="1587987130550">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state x="816" y="363" key="SettingsEditor/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1587987130550" />
+    <state x="907" y="442" key="Vcs.Push.Dialog.v2" timestamp="1587964832443">
+      <screen x="69" y="0" width="2491" height="1440" />
+    </state>
+    <state x="907" y="442" key="Vcs.Push.Dialog.v2/3909.0.2491.1440/69.0.2491.1440@69.0.2491.1440" timestamp="1587964832443" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="self.answer_data" />
+        <watch expression="answer_data_buffer" />
+        <watch expression="pl_iss_data" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>data</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+</project>
