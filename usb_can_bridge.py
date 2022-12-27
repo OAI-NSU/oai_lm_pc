@@ -114,9 +114,10 @@ class MyUSBCANDevice(serial.Serial):
     def close_id(self):
         self._print("Try to close COM-port <0x%s>:" % self.port)
         self.close()
-        time.sleep(0.1)
+        time.sleep(0.2)
         self.state = 0
         pass
+
     def reconnect(self):
         self.close_id()
         self.open_id()

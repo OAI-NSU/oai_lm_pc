@@ -55,14 +55,10 @@ class LMData:
         self.com_registers = []
         self.instamessage_data = [0 for i in range(128)]
         #
-        self.mem_num = 3  # 0 - all mem, 1 - iss mem, 3 - dcr mem
+        self.mem_num = 2  # 0 - all mem, 1 - pl sol
         self.mem_data = [[] for i in range(self.mem_num)]
-        # заготовка для хранения переменных общения с ПН1.1
-        self.pl_iss_data = {"pl11_a": [],
-                            "pl11_b": [],
-                            "pl12": [],
-                            "pl20": []
-        }
+        # заготовка для хранения переменных общения с ПН
+        self.pl_iss_data = {"pl_sol": []}
         #
         self._close_event = threading.Event()
         self.parc_thread = threading.Thread(target=self.parc_data, args=(), daemon=True)
@@ -87,14 +83,6 @@ class LMData:
             req_param_dict["offset"] = 16
         elif mode in "lm_init":
             req_param_dict["offset"] = 0
-        elif mode in "iss_mem_clear":
-            req_param_dict["offset"] = 1
-        elif mode in "dcr_mem_clear":
-            req_param_dict["offset"] = 2
-        elif mode in "dcr_ft_1_write":
-            req_param_dict["offset"] = 3
-        elif mode in "dcr_ft_2_write":
-            req_param_dict["offset"] = 4
         else:
             raise ValueError("Incorrect method parameter <mode>")
         self._print("send com<%s> <%s>" % (mode, action))
@@ -112,17 +100,13 @@ class LMData:
             req_param_dict["offset"] = 16
         elif mode in "lm_init":
             req_param_dict["offset"] = 0
-        elif mode in "dcr_mem_clear":
-            req_param_dict["offset"] = 1
-        elif mode in "iss_mem_clear":
-            req_param_dict["offset"] = 2
         else:
             raise ValueError("Incorrect method parameter <mode>")
         self._print("read com_status<%s>" % (mode))
         self.usb_can.request(**req_param_dict)
 
     def send_cmd_reg(self, mode="dbg_led_test", data=None):
-        if data:
+        if data is not None:
             req_param_dict = {"can_num": 0,
                               "dev_id": self.address,
                               "mode": "write",
@@ -136,26 +120,18 @@ class LMData:
                 req_param_dict["offset"] = 0x00
             elif mode in "const_mode":
                 req_param_dict["offset"] = 0x04
+            elif mode in "mem_init":
+                req_param_dict["offset"] = 0x05
+            elif mode in "mem_rd_ptr":
+                req_param_dict["offset"] = 0x07
             elif mode in "lm_mode":
                 req_param_dict["offset"] = 0x10
             elif mode in "lm_pn_pwr_switch":
                 req_param_dict["offset"] = 0x11
-            elif mode in "pn_inhibit":
+            elif mode in "pl_sol_cg_start":
                 req_param_dict["offset"] = 0x12
-            elif mode in "cyclogram_start":
-                req_param_dict["offset"] = 0x1A
-            elif mode in "pn_dcr_mode":
-                req_param_dict["offset"] = 0x1C
-            elif mode in "part_mem_rd_ptr":
-                req_param_dict["offset"] = 0x1E
-            elif mode in "pl11_a_outputs":
-                req_param_dict["offset"] = 0x23
-            elif mode in "pl11_b_outputs":
-                req_param_dict["offset"] = 0x24
-            elif mode in "pl12_outputs":
-                req_param_dict["offset"] = 0x25
-            elif mode in "pl20_outputs":
-                req_param_dict["offset"] = 0x26
+            elif mode in "pl_sol_cg_stop":
+                req_param_dict["offset"] = 0x13
             elif mode in "lm_soft_reset":
                 req_param_dict["offset"] = 0x27
             else:
@@ -182,22 +158,10 @@ class LMData:
                 req_param_dict["offset"] = 0x10
             elif mode in "lm_pn_pwr_switch":
                 req_param_dict["offset"] = 0x11
-            elif mode in "pn_inhibit":
+            elif mode in "pl_sol_cg_start":
                 req_param_dict["offset"] = 0x12
-            elif mode in "cyclogram_start":
-                req_param_dict["offset"] = 0x1A
-            elif mode in "pn_dcr_mode":
-                req_param_dict["offset"] = 0x1C
-            elif mode in "part_mem_rd_ptr":
-                req_param_dict["offset"] = 0x1E
-            elif mode in "pl11_a_outputs":
-                req_param_dict["offset"] = 0x23
-            elif mode in "pl11_b_outputs":
-                req_param_dict["offset"] = 0x24
-            elif mode in "pl12_outputs":
-                req_param_dict["offset"] = 0x25
-            elif mode in "pl20_outputs":
-                req_param_dict["offset"] = 0x26
+            elif mode in "pl_sol_cg_stop":
+                req_param_dict["offset"] = 0x13
             elif mode in "lm_soft_reset":
                 req_param_dict["offset"] = 0x27
             else:
@@ -249,7 +213,7 @@ class LMData:
                           "data": []}
         if mode in "mem_all":
             req_param_dict["offset"] = 0
-        elif mode in "iss_mem":
+        elif mode in "pl_sol_mem":
             req_param_dict["offset"] = 128
         elif mode in "dcr_mem":
             req_param_dict["offset"] = 256
@@ -257,65 +221,6 @@ class LMData:
             raise ValueError("Incorrect method parameter <mode>")
         self._print("read <%s>" % mode)
         self.usb_can.request(**req_param_dict)
-
-    def send_iss_instamessage(self, pl_type="pl11_a", data=None):
-        req_param_dict = {"can_num": 0,
-                          "dev_id": self.address,
-                          "mode": "write",
-                          "var_id": 9,
-                          "offset": 0,
-                          "d_len": 128,
-                          "data": data}
-        if pl_type == "pl11_a":
-            req_param_dict["offset"] = 0*128
-        elif pl_type == "pl11_b":
-            req_param_dict["offset"] = 1*128
-        elif pl_type == "pl12":
-            req_param_dict["offset"] = 2*128
-        elif pl_type == "pl20":
-            req_param_dict["offset"] = 3*128
-        else:
-            raise ValueError("Incorrect method parameter <mode>")
-        self._print("send instamessage <%s>" % pl_type)
-        self.usb_can.request(**req_param_dict)
-
-    def read_iss_instamessage(self, pl_type="pl11_a"):
-        req_param_dict = {"can_num": 0,
-                          "dev_id": self.address,
-                          "mode": "read",
-                          "var_id": 9,
-                          "offset": 0,
-                          "d_len": 128,
-                          "data": []}
-        if pl_type == "pl11_a":
-            req_param_dict["offset"] = 0*128
-        elif pl_type == "pl11_b":
-            req_param_dict["offset"] = 1*128
-        elif pl_type == "pl12":
-            req_param_dict["offset"] = 2*128
-        elif pl_type == "pl20":
-            req_param_dict["offset"] = 3*128
-        else:
-            raise ValueError("Incorrect method parameter <pl_type>")
-        self._print("read instamessage <%s>" % pl_type)
-        self.usb_can.request(**req_param_dict)
-
-    def write_dcr_fl_task_step(self, ft_num=1, ft_step=None, data=None):
-        ft_offset = 128 if ft_num == 1 else 128+2048
-        if ft_step < 128:
-            ft_offset += ft_step*16
-        else:
-            raise ValueError("Wrong flight task step num")
-        req_param_dict = {"can_num": 0,
-                          "dev_id": self.address,
-                          "mode": "write",
-                          "var_id": 8,
-                          "offset": ft_offset,
-                          "d_len": 16,
-                          "data": data}
-        self._print("write dcr flight_task-<%d> step-<%d>:" % (ft_num, ft_step) + list_to_str(data))
-        self.usb_can.request(**req_param_dict)
-        pass
 
     def parc_data(self):
         while True:
@@ -329,8 +234,6 @@ class LMData:
                     parced_data = norby_data.frame_parcer(data)
                     if offset == 256:
                         self.manage_general_data(parced_data)
-                    elif 512 <= offset < 1280:
-                        self.instamessage_data = copy.deepcopy(data)
                     elif 1280 <= offset < 5504:
                         self.manaage_cyclogram_result_data(offset, data)
                     pass
@@ -479,10 +382,7 @@ class LMData:
         if mem_num == 0:  # all mem
             self.mem_data[mem_num] = copy.deepcopy(data)
             pass
-        elif mem_num == 1:  # iss mem
-            self.mem_data[mem_num] = copy.deepcopy(data)
-            pass
-        elif mem_num == 2:  # dcr mem
+        elif mem_num == 1:
             self.mem_data[mem_num] = copy.deepcopy(data)
             pass
         else:
@@ -498,28 +398,6 @@ class LMData:
             return None
         except IndexError:
             return None
-
-    # pl_iss instamessage data #
-    def parc_instamessage_data(self, offset, data):
-        try:
-            leng = (data[127] & 0x1F) + 1
-            leng = 30 if leng > 30 else leng
-        except IndexError:
-            return
-        u32_data = []
-        for num in range(32):  # 2 - ctrl_byte & address, leng - data
-            try:
-                u32_data.append((data[0+num*4] << 24) + (data[1+num*4] << 16) + (data[2+num*4] << 8) + (data[3+num*4] << 0))
-            except IndexError:
-                u32_data.append(0x00000000)
-        if offset == 0*128:
-            self.pl_iss_data["pl11_a"] = u32_data
-        elif offset == 1*128:
-            self.pl_iss_data["pl11_b"] = u32_data
-        elif offset == 2*128:
-            self.pl_iss_data["pl12"] = u32_data
-        elif offset == 3*128:
-            self.pl_iss_data["pl20"] = data
 
     # LOG data #
     def get_log_file_title(self):
