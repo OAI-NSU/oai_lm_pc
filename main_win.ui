@@ -612,28 +612,24 @@
           <property name="spacing">
            <number>0</number>
           </property>
-          <item row="1" column="0" colspan="2">
-           <widget class="Line" name="line_16">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>5</height>
-             </size>
+          <item row="21" column="1">
+           <widget class="QSpinBox" name="mbReg1SBox">
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+            <property name="prefix">
+             <string>0x</string>
             </property>
-           </widget>
-          </item>
-          <item row="6" column="0" colspan="2">
-           <widget class="QPushButton" name="plSolReadFullMemPButt">
-            <property name="text">
-             <string>Read full memory</string>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+            <property name="displayIntegerBase">
+             <number>16</number>
             </property>
            </widget>
           </item>
-          <item row="8" column="0" colspan="2">
-           <spacer name="verticalSpacer">
+          <item row="23" column="0" colspan="2">
+           <spacer name="verticalSpacer_2">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -644,6 +640,46 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="9" column="0" colspan="2">
+           <widget class="QPushButton" name="plSolGetTMIPButton">
+            <property name="text">
+             <string>Get TMI</string>
+            </property>
+           </widget>
+          </item>
+          <item row="21" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Register 1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="Line" name="line_2">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>10</height>
+             </size>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="19" column="1">
+           <widget class="QSpinBox" name="mbRegCntSBox">
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>2</number>
+            </property>
+           </widget>
           </item>
           <item row="3" column="1">
            <widget class="QSpinBox" name="plSOLCGNumSBox">
@@ -658,8 +694,130 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QPushButton" name="plSOLStopCgPButton">
+          <item row="18" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>MB_ADDR</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="0">
+           <widget class="QPushButton" name="plSolStartExpPButton">
+            <property name="text">
+             <string>Start Exp.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="0" colspan="2">
+           <widget class="QLabel" name="label_8">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Запись параметров</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="1">
+           <widget class="QSpinBox" name="plSolExpSBox">
+            <property name="prefix">
+             <string>0x</string>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+            <property name="stepType">
+             <enum>QAbstractSpinBox::DefaultStepType</enum>
+            </property>
+            <property name="value">
+             <number>32768</number>
+            </property>
+            <property name="displayIntegerBase">
+             <number>16</number>
+            </property>
+           </widget>
+          </item>
+          <item row="25" column="0" colspan="2">
+           <widget class="QPushButton" name="plBRKGetTMIPButton">
+            <property name="text">
+             <string>Get TMI</string>
+            </property>
+           </widget>
+          </item>
+          <item row="28" column="0">
+           <widget class="QPushButton" name="ftStartPButton">
+            <property name="text">
+             <string>Start</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="PLSOLLabel">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>PL_SOL</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="20" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Register 0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="27" column="0" colspan="2">
+           <widget class="QLabel" name="label_2">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Flight Task</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="28" column="1">
+           <widget class="QSpinBox" name="ftNumSBox">
+            <property name="maximum">
+             <number>6</number>
+            </property>
+           </widget>
+          </item>
+          <item row="29" column="0">
+           <widget class="QPushButton" name="ftStopPButton">
             <property name="text">
              <string>Stop</string>
             </property>
@@ -681,6 +839,33 @@
             </property>
            </widget>
           </item>
+          <item row="13" column="0" colspan="2">
+           <widget class="QPushButton" name="plSolOpenWinPButton">
+            <property name="text">
+             <string>Open Window</string>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="0" colspan="2">
+           <widget class="Line" name="line_5">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>10</height>
+             </size>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="0" colspan="2">
+           <widget class="QPushButton" name="plSolCloseWinPButton">
+            <property name="text">
+             <string>Close Window</string>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="0">
            <widget class="QPushButton" name="plSOLRunCgPButton">
             <property name="text">
@@ -688,39 +873,178 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QLabel" name="PL20Label">
+          <item row="22" column="0" colspan="2">
+           <widget class="QPushButton" name="plSolMBParamWrPButton">
+            <property name="text">
+             <string>Parameters Write</string>
+            </property>
+           </widget>
+          </item>
+          <item row="20" column="1">
+           <widget class="QSpinBox" name="mbReg0SBox">
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="prefix">
+             <string>0x</string>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+            <property name="value">
+             <number>32768</number>
+            </property>
+            <property name="displayIntegerBase">
+             <number>16</number>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="1">
+           <widget class="QSpinBox" name="mbADDRSBox">
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="prefix">
+             <string>0x</string>
+            </property>
+            <property name="minimum">
+             <number>256</number>
+            </property>
+            <property name="maximum">
+             <number>292</number>
+            </property>
+            <property name="displayIntegerBase">
+             <number>16</number>
+            </property>
+           </widget>
+          </item>
+          <item row="19" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>REG_CNT</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QPushButton" name="plSOLStopCgPButton">
+            <property name="text">
+             <string>Stop</string>
+            </property>
+           </widget>
+          </item>
+          <item row="30" column="0" colspan="2">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="QProgressBar" name="plSolReadFullMemPBar">
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="Line" name="line_16">
             <property name="minimumSize">
              <size>
-              <width>250</width>
-              <height>25</height>
+              <width>0</width>
+              <height>5</height>
+             </size>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="26" column="0" colspan="2">
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="8" column="0" colspan="2">
+           <widget class="Line" name="line_3">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="24" column="0" colspan="2">
+           <widget class="QLabel" name="PL_BRK">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
              </size>
             </property>
             <property name="font">
              <font>
+              <pointsize>10</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
             <property name="text">
-             <string>PL_SOL</string>
+             <string>PL_BRK</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="Line" name="line_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+          <item row="29" column="1">
+           <widget class="QSpinBox" name="ftStopNumSBox"/>
+          </item>
+          <item row="10" column="0" colspan="2">
+           <widget class="QPushButton" name="plSolGetFRRPButton">
+            <property name="text">
+             <string>Get FRR</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="0" colspan="2">
-           <widget class="QProgressBar" name="plSolReadFullMemPBar">
+          <item row="12" column="0" colspan="2">
+           <widget class="QPushButton" name="plSolGetFRPButton">
+            <property name="text">
+             <string>Get FR</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QPushButton" name="plSolReadFullMemPButt">
+            <property name="text">
+             <string>Read full memory</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QSpinBox" name="plSolRdMemSBox">
+            <property name="maximum">
+             <number>10000</number>
+            </property>
             <property name="value">
-             <number>0</number>
+             <number>100</number>
             </property>
            </widget>
           </item>

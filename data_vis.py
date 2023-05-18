@@ -42,9 +42,9 @@ class Unit(QtWidgets.QWidget, data_vis_unit.Ui_dataVisUnitOName):
         self.name = ""
         self.set_name(name)
         self.data_list = [
-            ["Time, s", [0, 1, 2]],
-            ["Example 1, SmTh", [2, 3, 0]],
-            ["Example 2, SmTh", [2, 3, 1]]
+            ["Time, s", [0, 1, 2], [f"{i}"for i in [1, 2, 3]]],
+            ["Example 1, SmTh", [2, 3, 0], [f"{i}"for i in [2, 3, 0]]],
+            ["Example 2, SmTh", [2, 3, 1], [f"{i}"for i in [2, 3, 0]]]
             ]
         #
         self.copy_data_lock = threading.Lock()
@@ -384,10 +384,10 @@ class Widget(QtWidgets.QWidget, data_vis_widget.Ui_dataVisWidgetOName):
         self.setupUi(self)
         # general variables
         self.data_list = [
-            ["Time, s", [0, 1, 2]],
-            ["Example 1, SmTh", [2, 3, 0]],
-            ["Example 2, SmTh", [2, 3, 1]]
-        ]
+            ["Time, s", [0, 1, 2], [f"{i}"for i in [1, 2, 3]]],
+            ["Example 1, SmTh", [2, 3, 0], [f"{i}"for i in [2, 3, 0]]],
+            ["Example 2, SmTh", [2, 3, 1], [f"{i}"for i in [2, 3, 0]]]
+            ]
         # test
         self.units = Units(self.gunitQFrame)
         self.setLayout(self.units)
@@ -441,11 +441,8 @@ class Widget(QtWidgets.QWidget, data_vis_widget.Ui_dataVisWidgetOName):
         if self._is_data_list_change():
             self.table_init()
         # заполняем данные
-        for num, data in enumerate(self.get_data_last_val()):
-            if num == 0:
-                table_item = QtWidgets.QTableWidgetItem("%d" % data[-1])
-            else:
-                table_item = QtWidgets.QTableWidgetItem("%.3g" % data[-1])
+        for num, data in enumerate(self.get_data_last_val()[1]):
+            table_item = QtWidgets.QTableWidgetItem("%s" % data[-1])
             self.dataTableTWidget.setItem(num, 3, table_item)
 
     def get_data_names(self):
@@ -454,7 +451,8 @@ class Widget(QtWidgets.QWidget, data_vis_widget.Ui_dataVisWidgetOName):
 
     def get_data_last_val(self):
         data_last_val_list = [data[1] for data in self.data_list]
-        return data_last_val_list
+        data_last_str_list = [data[2] for data in self.data_list]
+        return data_last_val_list, data_last_str_list
 
     def check_item_changed(self, state):
         try:

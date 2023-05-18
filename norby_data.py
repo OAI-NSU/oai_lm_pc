@@ -19,6 +19,10 @@ lm_tmi = 0x81
 lm_full_tmi = 0x82
 lm_cyclogram_result = 0x89
 lm_load_param = 0x8A
+pl_sol_tmi = 0x90
+pl_sol_frr = 0x91
+pl_sol_fr = 0x92
+pl_brk_tmi = 0xA0
 
 
 def frame_parcer(frame):
@@ -34,201 +38,196 @@ def frame_parcer(frame):
             except Exception as error:
                 print(error)
             if 0x0FF1 == val_from(frame, 0, 2):  # проверка на метку кадра
-                if get_id_loc_data(val_from(frame, 2, 2))["dev_id"] == linking_module:
-                    if get_id_loc_data(val_from(frame, 2, 2))["data_code"] == lm_beacon:
+                if get_id_loc_data(val_from(frame, 4, 2))["dev_id"] == linking_module:
+                    if get_id_loc_data(val_from(frame, 4, 2))["data_code"] == lm_beacon:
                         #
                         data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
-                        data.append(["Определитель", "0x%04X" % val_from(frame, 2, 2)])
-                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 4, 2)])
-                        data.append(["Время кадра, с", "%d" % val_from(frame, 6, 4)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
+                        data.append(["Время кадра, с", "%d" % val_from(frame, 8, 4)])
                         #
-                        data.append(["Статус МС", "0x%02X" % val_from(frame, 10, 2)])
-                        data.append(["Стутус ПН", "0x%04X" % val_from(frame, 12, 2)])
-                        data.append(["Темп. МС, °С", "%d" % val_from(frame, 14, 1, signed=True)])
-                        data.append(["Статус пит. ПН", "0x%02X" % val_from(frame, 15, 1)])
+                        data.append(["Статус МС", "0x%02X" % val_from(frame, 12, 2)])
+                        data.append(["Стутус ПН", "0x%04X" % val_from(frame, 14, 2)])
+                        data.append(["Темп. МС, °С", "%d" % val_from(frame, 16, 1, signed=True)])
+                        data.append(["Статус пит. ПН", "0x%02X" % val_from(frame, 17, 1)])
                         #
                         data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
-                    elif get_id_loc_data(val_from(frame, 2, 2))["data_code"] == lm_tmi:
+                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == lm_tmi:
                         #
                         data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
-                        data.append(["Определитель", "0x%04X" % val_from(frame, 2, 2)])
-                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 4, 2)])
-                        data.append(["Время кадра, с", "%d" % val_from(frame, 6, 4)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
+                        data.append(["Время кадра, с", "%d" % val_from(frame, 8, 4)])
                         #
                         for i in range(6):
-                            data.append(["ПН%d статус" % i, "0x%04X" % val_from(frame, (10 + i * 2), 2)])
+                            data.append(["ПН%d статус" % i, "0x%04X" % val_from(frame, (12 + i * 2), 2)])
                         for i in range(7):
-                            data.append(["ПН%d напр., В" % i, "%.2f" % (val_from(frame, (22 + i * 2), 1) / (2 ** 4))])
-                            data.append(["ПН%d ток, А" % i, "%.2f" % (val_from(frame, (23 + i * 2), 1) / (2 ** 4))])
-                        data.append(["МС темп.,°С", "%.2f" % val_from(frame, 36, 1, signed=True)])
-                        data.append(["ПН1 темп.,°С", "%.2f" % val_from(frame, 37, 1, signed=True)])
-                        data.append(["ПН2 темп.,°С", "%.2f" % val_from(frame, 38, 1, signed=True)])
-                        data.append(["ПН3 темп.,°С", "%.2f" % val_from(frame, 39, 1, signed=True)])
-                        data.append(["ПН4 темп.,°С", "%.2f" % val_from(frame, 40, 1, signed=True)])
-                        #
-                        data.append(["Статус пит. ПН", "0x%02X" % val_from(frame, 41, 1)])
-                        data.append(["Память ИСС, %", "%.1f" % val_from(frame, 42, 1)])
-                        data.append(["Память ДКР, %", "%.1f" % val_from(frame, 43, 1)])
-                        data.append(["Счетчик включений", "%d" % val_from(frame, 44, 1)])
-                        data.append(["К.Р. питаиня", "0x%02X" % val_from(frame, 45, 1)])
-                        data.append(["К.Р. запрет", "0x%02X" % val_from(frame, 46, 2)])
-                        data.append(["Память ИСС у.ч.", "%d" % val_from(frame, 48, 2)])
-                        data.append(["Память ИСС у.з.", "%d" % val_from(frame, 50, 2)])
-                        data.append(["Память ИСС объем.", "%d" % val_from(frame, 52, 2)])
-                        data.append(["Память ДКР у.ч.", "%d" % val_from(frame, 54, 2)])
-                        data.append(["Память ДКР у.з.", "%d" % val_from(frame, 56, 2)])
-                        data.append(["Память ДКР объем", "%d" % val_from(frame, 58, 2)])
+                            data.append(["ПН%d напр., В" % i, "%.2f" % (val_from(frame, (24 + i * 2), 1, signed=True) / (2 ** 4))])
+                            data.append(["ПН%d ток, А" % i, "%.2f" % (val_from(frame, (25 + i * 2), 1, signed=True) / (2 ** 4))])
+                        data.append(["МС темп.,°С", "%.2f" % val_from(frame, 38, 1, signed=True)])
+                        data.append(["NU темп.,°С", "%.2f" % val_from(frame, 39, 1, signed=True)])
+                        for i in range(9):
+                            data.append(["Пам.%d ук.чт." % i, "%d" % (val_from(frame, (40 + i * 8), 2))])
+                            data.append(["Пам.%d ук.зап." % i, "%d" % (val_from(frame, (42 + i * 8), 2))])
+                            data.append(["Пам.%d объем" % i, "%d" % (val_from(frame, (44 + i * 8), 2))])
+                            data.append(["Пам.%d запол,%%" % i, "%.2f" % (val_from(frame, (46 + i * 8), 2)/256)])
                         #
                         data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
-                    elif get_id_loc_data(val_from(frame, 2, 2))["data_code"] == lm_full_tmi:
+                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == lm_full_tmi:
                         #
                         data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
-                        data.append(["Определитель", "0x%04X" % val_from(frame, 2, 2)])
-                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 4, 2)])
-                        data.append(["Время кадра, с", "%d" % val_from(frame, 6, 4)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
+                        data.append(["Время кадра, с", "%d" % val_from(frame, 8, 4)])
                         #
-                        data.append(["LM:status", "0x%04X" % val_from(frame, 10, 2)])
-                        data.append(["LM:err.flgs", "0x%04X" % val_from(frame, 12, 2)])
-                        data.append(["LM:err.cnt", "%d" % val_from(frame, 14, 1)])
-                        data.append(["LM:rst.cnt", "%d" % val_from(frame, 15, 1)])
-                        data.append(["LM:U,V", "%.3f" % (val_from(frame, 16, 2) / 256)])
-                        data.append(["LM:I,A", "%.3f" % (val_from(frame, 18, 2) / 256)])
-                        data.append(["LM:T,°C", "%.3f" % (val_from(frame, 20, 2) / 256)])
+                        data.append(["LM:id", "0x%04X" % val_from(frame, 12, 2)])
+                        data.append(["LM:status", "0x%04X" % val_from(frame, 14, 2)])
+                        data.append(["LM:err.flgs", "0x%04X" % val_from(frame, 16, 2)])
+                        data.append(["LM:err.cnt", "%d" % val_from(frame, 18, 1)])
+                        data.append(["LM:rst.cnt", "%d" % val_from(frame, 19, 1)])
+                        data.append(["LM:U,V", "%.3f" % (val_from(frame, 20, 2, signed=True) / 256)])
+                        data.append(["LM:I,A", "%.3f" % (val_from(frame, 22, 2, signed=True) / 256)])
+                        data.append(["LM:T,°C", "%.3f" % (val_from(frame, 24, 2, signed=True) / 256)])
+                        data.append(["LM:ver", "%d.%d.%d" % ((val_from(frame, 26, 1)),
+                                                             (val_from(frame, 27, 1)),
+                                                             (val_from(frame, 28, 1)))])
                         #
-                        for num, suff in enumerate(["A", "B"]):
-                            name = "PL11%s" % suff
-                            offs = [28, 46][num]
-                            #
-                            data.append(["%s:status" % name, "0x%04X" % val_from(frame, offs + 0, 2)])
-                            data.append(["%s:err.flgs" % name, "0x%04X" % val_from(frame, offs + 2, 2)])
-                            data.append(["%s:err.cnt" % name, "%d" % val_from(frame, offs + 4, 1)])
-                            data.append(["%s:inhibits" % name, "%02X" % val_from(frame, offs + 5, 1)])
-                            data.append(["%s:U,V" % name, "%.3f" % (val_from(frame, offs + 6, 2, signed=True) / 256)])
-                            data.append(["%s:I,A" % name, "%.3f" % (val_from(frame, offs + 8, 2, signed=True) / 256)])
-                            data.append(["%s:T,°C" % name, "%.3f" % (val_from(frame, offs + 10, 2, signed=True) / 256)])
-                            #
-                            stm = val_from(frame, offs + 13, 1)
-                            data.append(["%s:STM_INT" % name, "0x%02X" % ((stm >> 0) & 0x01)])
-                            data.append(["%s:STM_PWR_ERR" % name, "0x%02X" % ((stm >> 1) & 0x01)])
-                            data.append(["%s:STM_WD" % name, "0x%02X" % ((stm >> 2) & 0x01)])
-                            data.append(["%s:STM_CPU_ERR" % name, "0x%02X" % ((stm >> 3) & 0x01)])
-                            #
-                            iku = val_from(frame, offs + 12, 1)
-                            data.append(["%s:IKU_RST_FPGA" % name, "0x%02X" % ((iku >> 0) & 0x01)])
-                            data.append(["%s:IKU_RST_LEON" % name, "0x%02X" % ((iku >> 1) & 0x01)])
+                        pl_dict = ["LM", "PL_SOL", "PL_BRK_0"]
                         #
-                        name = "PL12"
-                        offs = 64
-                        data.append(["%s:status" % name, "0x%04X" % val_from(frame, offs + 0, 2)])
-                        data.append(["%s:err.flgs" % name, "0x%04X" % val_from(frame, offs + 2, 2)])
-                        data.append(["%s:err.cnt" % name, "%d" % val_from(frame, offs + 4, 1)])
-                        data.append(["%s:inhibits" % name, "%02X" % val_from(frame, offs + 5, 1)])
-                        data.append(["%s:U,V" % name, "%.3f" % (val_from(frame, offs + 6, 2, signed=True) / 256)])
-                        data.append(["%s:I,A" % name, "%.3f" % (val_from(frame, offs + 8, 2, signed=True) / 256)])
-                        data.append(["%s:T,°C" % name, "%.3f" % (val_from(frame, offs + 10, 2, signed=True) / 256)])
+                        for i, pl in enumerate(pl_dict):
+                            if pl != "LM":
+                                offset = 12+i*18
+                                data.append([f"{pl}:id", "%d" % val_from(frame, offset + 0, 2)])
+                                data.append([f"{pl}:err.cnt", "%d" % val_from(frame, offset + 2, 2)])
+                                data.append([f"{pl}:status", "0x%04X" % val_from(frame, offset + 4, 2)])
+                                data.append([f"{pl}:voltage", "%.3f" % (val_from(frame, offset + 6, 2, signed=True) / 256)])
+                                data.append([f"{pl}:current", "%.3f" % (val_from(frame, offset + 8, 2, signed=True) / 256)])
+                                data.append([f"{pl}:wr_ptr", "%d" % val_from(frame, offset + 10, 2)])
+                                data.append([f"{pl}:rd_ptr", "%d" % val_from(frame, offset + 12, 2)])
+                                data.append([f"{pl}:full_volume", "%d" % val_from(frame, offset + 14, 2)])
+                                data.append([f"{pl}:mem_fullness", "%.3f" % val_from(frame, offset + 16, 2)])
                         #
-                        stm = val_from(frame, offs + 13, 1)
-                        data.append(["%s:TM_PWR_ERR" % name, "0x%02X" % ((stm >> 0) & 0x01)])
-                        data.append(["%s:TM_CPU_OK" % name, "0x%02X" % ((stm >> 1) & 0x01)])
-                        data.append(["%s:TM_INT" % name, "0x%02X" % ((stm >> 2) & 0x01)])
-                        data.append(["%s:TM_ERR" % name, "0x%02X" % ((stm >> 3) & 0x01)])
-                        #
-                        iku = val_from(frame, offs + 12, 1)
-                        data.append(["%s:IKU_nRST" % name, "0x%02X" % ((iku >> 0) & 0x01)])
-                        data.append(["%s:IKU_SPI_SEL" % name, "0x%02X" % ((iku >> 1) & 0x01)])
-                        #
-                        name = "PL20"
-                        offs = 82
-                        data.append(["%s:status" % name, "0x%04X" % val_from(frame, offs + 0, 2)])
-                        data.append(["%s:err.flgs" % name, "0x%04X" % val_from(frame, offs + 2, 2)])
-                        data.append(["%s:err.cnt" % name, "%d" % val_from(frame, offs + 4, 1)])
-                        data.append(["%s:inhibits" % name, "%02X" % val_from(frame, offs + 5, 1)])
-                        data.append(["%s:U,V" % name, "%.3f" % (val_from(frame, offs + 6, 2, signed=True) / 256)])
-                        data.append(["%s:I,A" % name, "%.3f" % (val_from(frame, offs + 8, 2, signed=True) / 256)])
-                        data.append(["%s:T,°C" % name, "%.3f" % (val_from(frame, offs + 10, 2, signed=True) / 256)])
-                        #
-                        stm = val_from(frame, offs + 13, 1)
-                        data.append(["%s:TM_SYS_FAIL" % name, "0x%02X" % ((stm >> 0) & 0x01)])
-                        data.append(["%s:TM_I_MON" % name, "0x%02X" % ((stm >> 1) & 0x01)])
-                        data.append(["%s:TM_INT" % name, "0x%02X" % ((stm >> 2) & 0x01)])
-                        data.append(["%s:TM_ANA" % name, "0x%02X" % ((stm >> 3) & 0x01)])
-                        #
-                        iku = val_from(frame, offs + 12, 1)
-                        data.append(["%s:IKU_EXT_RST" % name, "0x%02X" % ((iku >> 0) & 0x01)])
-                        #
-                        data.append(["PL_DCR:status", "0x%04X" % val_from(frame, 100, 2)])
-                        data.append(["PL_DCR:err.flgs", "0x%04X" % val_from(frame, 102, 2)])
-                        data.append(["PL_DCR:err.cnt", "%d" % val_from(frame, 104, 1)])
-                        data.append(["PL_DCR:PWR_SW", "0x%02X" % val_from(frame, 105, 1)])
-                        data.append(["PL_DCR:Umcu,V", "%.3f" % (val_from(frame, 106, 2, signed=True) / 256)])
-                        data.append(["PL_DCR:Imcu,A", "%.3f" % (val_from(frame, 108, 2, signed=True) / 256)])
-                        data.append(["PL_DCR:Umsr,V", "%.3f" % (val_from(frame, 110, 2, signed=True) / 256)])
-                        data.append(["PL_DCR:Imsr,A", "%.3f" % (val_from(frame, 112, 2, signed=True) / 256)])
-                        data.append(["PL_DCR:rx cnt", "%d" % val_from(frame, 114, 1)])
-                        data.append(["PL_DCR:tx cnt", "%d" % val_from(frame, 115, 1)])
-                        #
-                        data.append(["MEM: ISS wr_ptr", "%d" % val_from(frame, 22, 2)])
-                        data.append(["MEM: DCR wr_ptr", "%d" % val_from(frame, 24, 2)])
-                        data.append(["MEM: ISS rd_ptr", "%d" % val_from(frame, 118, 2)])
-                        data.append(["MEM: ISS vol", "%d" % val_from(frame, 120, 2)])
-                        data.append(["MEM: DCR rd_ptr", "%d" % val_from(frame, 122, 2)])
-                        data.append(["MEM: DCR vol", "%d" % val_from(frame, 124, 2)])
+                        offset = 112
+                        data.append([f"{pl}:ft num", "%d" % val_from(frame, offset + 0, 1)])
+                        data.append([f"{pl}:ft mode", "%d" % val_from(frame, offset + 1, 1)])
+                        data.append([f"{pl}:ft fun type", "%d" % (val_from(frame, offset + 2, 1) & 0xF)])
+                        data.append([f"{pl}:ft fun cmd", "%d" % (val_from(frame, offset + 2, 1) >> 4)])
+                        data.append([f"{pl}:ft step_num", "%d" % val_from(frame, offset + 3, 1)])
+                        data.append([f"{pl}:ft rpt_value", "%d" % val_from(frame, offset + 4, 2)])
+                        data.append([f"{pl}:ft frame_num", "%d" % val_from(frame, offset + 6, 2)])
                         #
                         data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
-                    elif get_id_loc_data(val_from(frame, 2, 2))["data_code"] == lm_cyclogram_result:
+                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == lm_load_param:
                         #
                         data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
-                        data.append(["Определитель", "0x%04X" % val_from(frame, 2, 2)])
-                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 4, 2)])
-                        data.append(["Время кадра, с", "%d" % val_from(frame, 6, 4)])
-                        data.append(["Кол-во кадров, шт.", "%d" % val_from(frame, 10, 2)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
+                        data.append(["Время кадра, с", "%d" % val_from(frame, 8, 4)])
                         #
-                        data.append(["№ цикл.", "%d" % val_from(frame, 12, 2)])
-                        data.append(["Режим", "0x%02X" % val_from(frame, 14, 1)])
-                        data.append(["Статус", "0x%02X" % val_from(frame, 15, 1)])
-                        #
-                        for num in range(8):
-                            sub_offs = num*12 + 30
-                            data.append(["ТМИ%d: №" % num, "%d" % val_from(frame, 0 + sub_offs, 1)])
-                            data.append([" ТМИ%d: ПН" % num, "0x%04X" % val_from(frame, 1 + sub_offs, 1)])
-                            data.append([" ТМИ%d: U,В" % num, "%.2f" % (val_from(frame, 2 + sub_offs, 1)/(2**4))])
-                            data.append([" ТМИ%d: I,А" % num, "%.2f" % (val_from(frame, 3 + sub_offs, 1)/(2**4))])
-                            data.append([" ТМИ%d: ИКУ" % num, "0x%02X" % val_from(frame, 4 + sub_offs, 1)])
-                            data.append([" ТМИ%d: СТМ" % num, "0x%02X" % val_from(frame, 5 + sub_offs, 1)])
-                            data.append([" ТМИ%d: °С" % num, "%d" % val_from(frame, 6 + sub_offs, 1, signed=True)])
-                            data.append([" ТМИ%d: Счетчик ош." % num, "%d" % val_from(frame, 7 + sub_offs, 1)])
-                            data.append([" ТМИ%d: ПН ош." % num, "0x%04X" % val_from(frame, 8 + sub_offs, 1)])
-                            data.append([" ТМИ%d: ПН ст." % num, "0x%04X" % val_from(frame, 9 + sub_offs, 1)])
+                        data.append(["Версия", "%d.%02d.%02d" % (val_from(frame, 12, 2),
+                                                                 val_from(frame, 14, 2),
+                                                                 val_from(frame, 16, 2))])
+                        data.append(["К. питания", "%d" % val_from(frame, 18, 2, signed=True)])
+                        data.append(["К. темп", "%d" % val_from(frame, 20, 2, signed=True)])
+                        data.append(["Циклограммы", "%d" % val_from(frame, 22, 2, signed=True)])
+                        data.append(["CAN", "%d" % val_from(frame, 24, 2, signed=True)])
+                        data.append(["Внеш. память", "%d" % val_from(frame, 26, 2, signed=True)])
+                        data.append(["Загр. конфиг.", "%d" % val_from(frame, 28, 2, signed=True)])
+                        data.append(["Часть flash", "%d" % val_from(frame, 30, 2, signed=True)])
                         #
                         data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
-                    elif get_id_loc_data(val_from(frame, 2, 2))["data_code"] == lm_load_param:
+                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_sol_tmi:
                         #
                         data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
-                        data.append(["Определитель", "0x%04X" % val_from(frame, 2, 2)])
-                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 4, 2)])
-                        data.append(["Время кадра, с", "%d" % val_from(frame, 6, 4)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
+                        data.append(["Время кадра, с", "%d" % val_from(frame, 8, 4)])
                         #
-                        data.append(["Версия", "%d.%02d.%02d" % (val_from(frame, 10, 2),
-                                                                 val_from(frame, 12, 2),
-                                                                 val_from(frame, 14, 2))])
-                        data.append(["К. питания", "%d" % val_from(frame, 16, 2, signed=True)])
-                        data.append(["К. темп", "%d" % val_from(frame, 18, 2, signed=True)])
-                        data.append(["Циклограммы", "%d" % val_from(frame, 20, 2, signed=True)])
-                        data.append(["CAN", "%d" % val_from(frame, 22, 2, signed=True)])
-                        data.append(["Внеш. память", "%d" % val_from(frame, 24, 2, signed=True)])
+                        offset = 12
+                        pl = "SOL"
+                        data.append([f"{pl}:id", "%d" % val_from(frame, offset + 0, 2)])
+                        data.append([f"{pl}:err.cnt", "%d" % val_from(frame, offset + 2, 2)])
+                        data.append([f"{pl}:status", "0x%04X" % val_from(frame, offset + 4, 2)])
+                        data.append([f"{pl}:voltage", "%.3f" % (val_from(frame, offset + 6, 2, signed=True) / 256)])
+                        data.append([f"{pl}:current", "%.3f" % (val_from(frame, offset + 8, 2, signed=True) / 256)])
+                        data.append([f"{pl}:wr_ptr", "%d" % val_from(frame, offset + 10, 2)])
+                        data.append([f"{pl}:rd_ptr", "%d" % val_from(frame, offset + 12, 2)])
+                        data.append([f"{pl}:full_volume", "%d" % val_from(frame, offset + 14, 2)])
+                        data.append([f"{pl}:mem_fullness", "%.3f" % val_from(frame, offset + 16, 2)])
+                        #
+                        data.append([f"{pl}:F/C", "0x%04X" % val_from(frame, 30+0, 2)])
+                        data.append([f"{pl}:state", "0x%04X" % val_from(frame, 30+36, 2)])
+                        data.append([f"{pl}:temp0", "%d" % (val_from(frame, 30+38, 1, signed=True) + 160)])
+                        data.append([f"{pl}:temp1", "%d" % (val_from(frame, 30+39, 1, signed=True) + 160)])
+                        data.append([f"{pl}:raddr", "%d" % (val_from(frame, 30+64, 2, signed=False))])
+                        data.append([f"{pl}:eaddr", "%d" % (val_from(frame, 30+66, 2, signed=False))])
+                        #
+                        offset = 98
+                        data.append([f"{pl}:ft num", "%d" % val_from(frame, offset + 0, 1)])
+                        data.append([f"{pl}:ft mode", "%d" % val_from(frame, offset + 1, 1)])
+                        data.append([f"{pl}:ft fun type", "%d" % (val_from(frame, offset + 2, 1) & 0xF)])
+                        data.append([f"{pl}:ft fun cmd", "%d" % (val_from(frame, offset + 2, 1) >> 4)])
+                        data.append([f"{pl}:ft step_num", "%d" % val_from(frame, offset + 3, 1)])
+                        data.append([f"{pl}:ft rpt_value", "%d" % val_from(frame, offset + 4, 2)])
+                        data.append([f"{pl}:ft frame_num", "%d" % val_from(frame, offset + 6, 2)])
+                        #
+                        offset = 106
+                        data.append([f"{pl}:ft num", "%d" % val_from(frame, offset + 0, 1)])
+                        data.append([f"{pl}:ft mode", "%d" % val_from(frame, offset + 1, 1)])
+                        data.append([f"{pl}:ft fun type", "%d" % (val_from(frame, offset + 2, 1) & 0xF)])
+                        data.append([f"{pl}:ft fun cmd", "%d" % (val_from(frame, offset + 2, 1) >> 4)])
+                        data.append([f"{pl}:ft step_num", "%d" % val_from(frame, offset + 3, 1)])
+                        data.append([f"{pl}:ft rpt_value", "%d" % val_from(frame, offset + 4, 2)])
+                        data.append([f"{pl}:ft frame_num", "%d" % val_from(frame, offset + 6, 2)])
+                        #
+                        data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
+                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_brk_tmi:
+                        #
+                        data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
+                        data.append(["Время кадра, с", "%d" % val_from(frame, 8, 4)])
+                        #
+                        offset = 12
+                        pl = "BRK"
+                        data.append([f"{pl}:id", "%d" % val_from(frame, offset + 0, 2)])
+                        data.append([f"{pl}:err.cnt", "%d" % val_from(frame, offset + 2, 2)])
+                        data.append([f"{pl}:status", "0x%04X" % val_from(frame, offset + 4, 2)])
+                        data.append([f"{pl}:voltage", "%.3f" % (val_from(frame, offset + 6, 2, signed=True) / 256)])
+                        data.append([f"{pl}:current", "%.3f" % (val_from(frame, offset + 8, 2, signed=True) / 256)])
+                        data.append([f"{pl}:wr_ptr", "%d" % val_from(frame, offset + 10, 2)])
+                        data.append([f"{pl}:rd_ptr", "%d" % val_from(frame, offset + 12, 2)])
+                        data.append([f"{pl}:full_volume", "%d" % val_from(frame, offset + 14, 2)])
+                        data.append([f"{pl}:mem_fullness", "%.3f" % val_from(frame, offset + 16, 2)])
+                        #
+                        data.append([f"{pl}:ft num", "%d" % val_from(frame, 30, 1)])
+                        data.append([f"{pl}:ft mode", "%d" % val_from(frame, 31, 1)])
+                        data.append([f"{pl}:ft fun type", "%d" % (val_from(frame, 32, 1) & 0xF)])
+                        data.append([f"{pl}:ft fun cmd", "%d" % (val_from(frame, 32, 1) >> 4)])
+                        data.append([f"{pl}:ft step_num", "%d" % val_from(frame, 33, 1)])
+                        data.append([f"{pl}:ft rpt_value", "%d" % val_from(frame, 34, 2)])
+                        data.append([f"{pl}:ft frame_num", "%d" % val_from(frame, 36, 2)])
                         #
                         data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
                     else:
                         #
                         data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
-                        data.append(["Определитель", "0x%04X" % val_from(frame, 2, 2)])
-                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 4, 2)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
                         #
                         data.append(["Неизвестный тип данных", "0"])
                 else:
                     #
                     data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
-                    data.append(["Определитель", "0x%04X" % val_from(frame, 2, 2)])
+                    data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                    data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
                     #
                     data.append(["Неизвестный определитель", "0"])
             else:

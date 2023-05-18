@@ -31,7 +31,7 @@ class MyUSBCANDevice(serial.Serial):
         self.timeout = 0.005
         self.port = "COM0"
         self.row_data = b""
-        self.read_timeout = 0.2
+        self.read_timeout = 0.5
         self.request_num = 0
         self.debug = True
         self.crc_check = True
@@ -56,7 +56,6 @@ class MyUSBCANDevice(serial.Serial):
         self.req_number = 0
         self.last_answer_data = None
         self.answer_data_buffer = []
-        self.com_rec_flag = 0
         self.read_data = b""
         self.read_flag = 0
         self.state_string = {
@@ -67,6 +66,7 @@ class MyUSBCANDevice(serial.Serial):
             +1: "Связь в норме",
         }
         self.state = 0
+        self.ready_to_transaction = True
         self.serial_log_buffer = []
         self.can_log_buffer = []
         # для работы с потоками
@@ -92,6 +92,7 @@ class MyUSBCANDevice(serial.Serial):
                             self.open()
                             self._print("Success connection!")
                             try:
+                                self._close_event.clear()
                                 self.read_write_thread.start()
                             except Exception:
                                 pass
@@ -113,13 +114,14 @@ class MyUSBCANDevice(serial.Serial):
 
     def close_id(self):
         self._print("Try to close COM-port <0x%s>:" % self.port)
+        self._close_event.set()
         self.close()
-        time.sleep(0.2)
         self.state = 0
         pass
 
     def reconnect(self):
         self.close_id()
+        time.sleep(0.2)
         self.open_id()
 
     def request(self, can_num=0, dev_id=0, mode="read", var_id=0, offset=0, d_len=0, data=None):
@@ -145,6 +147,7 @@ class MyUSBCANDevice(serial.Serial):
             packets_list.append([packet_list, rtr, finish])
         with self.com_send_lock:
             self.com_queue.extend(packets_list)
+            self.ready_to_transaction = False
         with self.log_lock:
             id_var = ((dev_id & 0x0F) << 28) | ((var_id & 0x0F) << 24) | ((offset & 0x1FFFFF) << 3) | \
                      ((0x00 & 0x01) << 2) | ((rtr & 0x01) << 1) | ((0x00 & 0x01) << 0)
@@ -177,7 +180,6 @@ class MyUSBCANDevice(serial.Serial):
 
     def thread_function(self):
         try:
-            full_time_start = 0
             id_var = 0
             while True:
                 nansw = 0
@@ -185,6 +187,7 @@ class MyUSBCANDevice(serial.Serial):
                     time.sleep(0.001)
                     # отправка команд
                     if self.com_queue:
+                        self.ready_to_transaction = False
                         with self.com_send_lock:
                             packet_to_send = self.com_queue.pop(0)
                             data_to_send = packet_to_send[0]
@@ -208,59 +211,74 @@ class MyUSBCANDevice(serial.Serial):
                         buf = bytearray(b"")
                         read_data = bytearray(b"")
                         time_start = time.perf_counter()
-                        while rtr:
-                            time.sleep(0.003)
-                            timeout = time.perf_counter() - time_start
-                            if timeout >= self.read_timeout:
-                                break
-                            try:
-                                read_data = self.read(128)
-                                self.read_data = read_data
-                            except (TypeError, serial.serialutil.SerialException, AttributeError) as error:
-                                self.state = -3
-                                self._print("Receive error: ", error)
-                                pass
-                            if read_data:
-                                self._print("Receive data with timeout <%.3f>: " % self.timeout, bytes_array_to_str(read_data))
-                                with self.log_lock:
-                                    self.serial_log_buffer.append(get_time() + bytes_array_to_str(read_data))
-                                read_data = buf + bytes(read_data)  # прибавляем к новому куску старый кусок
-                                self._print("Data to process: ", bytes_array_to_str(read_data))
-                                if len(read_data) >= 8:
-                                    if read_data[0] == 0x00 or read_data[0] == 0x01:
-                                        data_len = int.from_bytes(read_data[6:8], byteorder="little")
-                                        if len(read_data) >= data_len + 8:  # проверка на достаточную длину приходящего пакета
-                                            nansw -= 1
-                                            self.state = 1
-                                            rtr = 0
-                                            if len(self.answer_data_buffer) == 0:
-                                                id_var = int.from_bytes(read_data[2:6], byteorder="little")
-                                                full_time_start = time_start
-                                            self.answer_data_buffer.extend(read_data[8:8 + data_len])
-                                            if finish:
-                                                with self.ans_data_lock:
-                                                    self.last_answer_data = [id_var,
-                                                                             self.answer_data_buffer]
-                                                    self.answer_data.append([id_var,
-                                                                             self.answer_data_buffer])
-                                                    self._print(self.can_log_str(id_var, self.answer_data_buffer, len(self.answer_data_buffer)))
-                                                with self.log_lock:
-                                                    self.can_log_buffer.append(
-                                                        self.can_log_str(id_var, self.answer_data_buffer, len(self.answer_data_buffer)))
-                                                self.answer_data_buffer = []
-                                                finish = False
+                        if rtr:
+                            while rtr:
+                                time.sleep(0.003)
+                                timeout = time.perf_counter() - time_start
+                                if timeout >= self.read_timeout:
+                                    break
+                                try:
+                                    read_data = self.read(128)
+                                    self.read_data = read_data
+                                except (TypeError, serial.serialutil.SerialException, AttributeError) as error:
+                                    self.state = -3
+                                    self._print("Receive error: ", error)
+                                    pass
+                                if read_data:
+                                    self._print("Receive data with timeout <%.3f>: " % self.timeout, bytes_array_to_str(read_data))
+                                    with self.log_lock:
+                                        self.serial_log_buffer.append(get_time() + bytes_array_to_str(read_data))
+                                    read_data = buf + bytes(read_data)  # прибавляем к новому куску старый кусок
+                                    self._print("Data to process: ", bytes_array_to_str(read_data))
+                                    if len(read_data) >= 8:
+                                        if read_data[0] == 0x00 or read_data[0] == 0x01:
+                                            data_len = int.from_bytes(read_data[6:8], byteorder="little")
+                                            if len(read_data) >= data_len + 8:  # проверка на достаточную длину приходящего пакета
+                                                nansw -= 1
+                                                self.state = 1
+                                                rtr = 0
+                                                if len(self.answer_data_buffer) == 0:
+                                                    id_var = int.from_bytes(read_data[2:6], byteorder="little")
+                                                    full_time_start = time_start
+                                                self.answer_data_buffer.extend(read_data[8:8 + data_len])
+                                                if finish:
+                                                    with self.ans_data_lock:
+                                                        self.last_answer_data = [id_var,
+                                                                                 self.answer_data_buffer]
+                                                        self.answer_data.append([id_var,
+                                                                                 self.answer_data_buffer])
+                                                        self._print(self.can_log_str(id_var, self.answer_data_buffer, len(self.answer_data_buffer)))
+                                                    with self.log_lock:
+                                                        self.can_log_buffer.append(
+                                                            self.can_log_str(id_var, self.answer_data_buffer, len(self.answer_data_buffer)))
+                                                    self.answer_data_buffer = []
+                                                    finish = False
+                                            else:
+                                                buf = read_data
+                                                read_data = bytearray(b"")
                                         else:
-                                            buf = read_data
+                                            buf = read_data[1:]
                                             read_data = bytearray(b"")
                                     else:
-                                        buf = read_data[1:]
+                                        buf = read_data
                                         read_data = bytearray(b"")
+                                    pass
                                 else:
-                                    buf = read_data
-                                    read_data = bytearray(b"")
-                                pass
-                            else:
-                                pass
+                                    pass
+                        elif rtr == 0:
+                            while len(read_data) == 0:
+                                time.sleep(0.003)
+                                timeout = time.perf_counter() - time_start
+                                if timeout >= self.read_timeout:
+                                    break
+                                try:
+                                    read_data = self.read(8)
+                                except (TypeError, serial.serialutil.SerialException, AttributeError) as error:
+                                    self.state = -3
+                                    self._print("Receive error: ", error)
+                                    pass
+                    else:
+                        self.ready_to_transaction = True
                 else:
                     pass
                 if nansw == 1:
@@ -269,6 +287,7 @@ class MyUSBCANDevice(serial.Serial):
                     self._print("Timeout error")
                 if self._close_event.is_set() is True:
                     self._close_event.clear()
+                    self._print("Close usb_can read thread")
                     return
         except Exception as error:
             self._print("Tx thread ERROR: " + str(error))

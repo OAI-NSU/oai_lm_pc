@@ -5,7 +5,9 @@ import copy
 import random
 
 # класс для управления устройством
-lm = lm_data.LMData(serial_numbers=["0000ACF00000"], address=6, debug=False)
+lm = lm_data.LMData(serial_numbers=["0000ACF00000", "365938753038"], address=6, debug=False)
+
+
 def get_time():
     return time.strftime("%H-%M-%S", time.localtime()) + "." + ("%.3f: " % time.perf_counter()).split(".")[1]
 
@@ -317,18 +319,134 @@ def telescope_autonomus_test():
     pass
 
 
+def read_ft_mem(ft=0, step_num=1):
+    ft_name = f"ft{ft}_mem"
+    ft_volume_in_frame = step_num//2
+    lm.send_cmd_reg(mode="mem_rd_ptr", data=[ft+3, 0, 0, 0, 0])
+    time.sleep(0.3)
+    data_str = ""
+    for i in range(ft_volume_in_frame):
+        lm.read_mem(mode=ft_name)
+        time.sleep(1.0)
+        data_str += lm.get_mem_data(ft+3+1)
+    return data_str
+
+
+def read_mem_part(part=0, num=0):
+    lm.send_cmd_reg(mode="mem_rd_ptr", data=[part, 0, 0, 0, 0])
+    time.sleep(0.2)
+    data_str = ""
+    for i in range(num):
+        lm.read_mem(part=part)
+        time.sleep(1.0)
+        data_str += lm.get_mem_data(part + 1)
+        percentage = (i/num)*100
+        print("\r", "<", int((percentage//10))*"▓"+ int(10-(percentage//10))*"░", f">{percentage:.1f}%", end="")
+    print("\n")
+    return data_str
+
+
+def form_step_data(type: int, cmd: int, rpt_cnt: int, delay_ms: int, settings: int, go_to: int, go_cnt: int, data: list):
+    """
+    /**
+     * @brief функция формирования шага полетного задания
+     *
+     * @param step указатель на структуру шага
+     * @param type тип команды
+     * @param cmd номер команды
+     * @param rpt_cnt счетчик повторов шага
+     * @param delay_ms пауза до следующего шага
+     * @param settings настройка работы (пока не используется)
+     * @param data данные для функции
+     */
+    void ft_create_ft_step(typeFTStep* step, uint8_t type, uint8_t cmd, uint8_t rpt_cnt, uint16_t delay_ms, uint16_t settings, uint8_t*data)
+    {
+        step->fields.label      = 0xFAFB;
+        step->fields.type       = type;
+        step->fields.cmd        = cmd;
+        step->fields.rpt_cnt    = rpt_cnt;
+        step->fields.go_to      = 0x00;
+        step->fields.go_cnt     = 0x00;
+        step->fields.delay_ms   = delay_ms;
+        step->fields.settings   = settings;
+        memset(step->fields.reserve, 0x00, sizeof(step->fields.reserve));
+        memcpy(step->fields.data, data, sizeof(step->fields.data));
+        step->fields.crc16      = norby_crc16_calc(step->array, sizeof(typeFTStep) - 2);
+    }
+    :return:
+    """
+    order = 'little'
+    step = b""
+    step += 0xFAFB.to_bytes(2, byteorder=order, signed=False)  # flight task mark
+    step += type.to_bytes(1, order, signed=False)  # command type
+    step += cmd.to_bytes(1, order, signed=False)  # command number
+    step += rpt_cnt.to_bytes(2, order, signed=False)  # repeate count
+    step += go_to.to_bytes(1, order, signed=False)  # go_to (reserve to future functionality)
+    step += go_cnt.to_bytes(1, order, signed=False)  # go_cnt (reserve to future functionality)
+    step += delay_ms.to_bytes(4, order, signed=False)  # next function run delay
+    step += settings.to_bytes(2, order, signed=False)  # настройки выполнения шага
+    step += bytes([0 for i in range(2*8)])  # reserve
+    # дополняем данные до 32 байт
+    while len(data) < 32:
+        data.append(0x00)
+    #
+    step += bytes(data)  # task step data
+    step_crc_16 = crc16.norby_crc16_calc(step, 64-2)
+    step += step_crc_16.to_bytes(2, order, signed=False)  # crc16
+    print(" ".join([f"{int.from_bytes(step[2*n:2*n+2], byteorder='little'):04X}" for n in range(len(step)//2)]))
+    return step
+
+
+def write_ft_regs(num=0):
+    """
+
+    """
+    delay = 0.2
+    lm.write_ft_regs(num=num, step=0, step_data=form_step_data(0, 0, 0, 1000, 0, 0x00, 0x00, [0x01]))
+    time.sleep(delay)
+    lm.write_ft_regs(num=num, step=1, step_data=form_step_data(0, 1, 0, 1000, 0x01, 0x00, 0x00, [0]))
+    time.sleep(delay)
+    lm.write_ft_regs(num=num, step=2, step_data=form_step_data(0, 0, 0, 1000, 0, 0x00, 0x00, [0x00]))
+    time.sleep(delay)
+    lm.write_ft_regs(num=num, step=3, step_data=form_step_data(0, 1, 0, 1000, 0x01, 0x00, 0x05, [0]))
+    for i in range(4, 32):
+        time.sleep(delay)
+        lm.write_ft_regs(num=num, step=i, step_data=[0 for i in range(64)])
+
+
+def write_ft_from_reg_to_mem(num=0):
+    lm.send_cmd_reg(mode="write_ft_to_mem", data=[num])
+
+
+def read_ft_from_mem(num=0):
+    lm.send_cmd_reg(mode="read_ft_from_mem", data=[num])
+
+
+def read_ft_from_regs(num=0):
+    lm.send_cmd_reg(mode="read_ft_from_regs", data=[num])
+
+
+def run_ft(num=0):
+    lm.send_cmd_reg(mode="run_ft", data=[num])
+
+
 print(get_time(), "Начало работы")
 lm.usb_can.reconnect()
 while lm.usb_can.state != 1:
     print(get_time(), "Попытка переподключения")
     time.sleep(1)
     lm.usb_can.reconnect()
+print(get_time(), "Старт циклограммы")
+ft_num = 3
 #general
+write_ft_regs(num=ft_num)
 time.sleep(1)
-print(get_time(), "Общее отключение питания")
-pl_pwr_ctrl_all(on_off=0)
-# ekkd
-# aznv
-# telescope
-ekkd_autonomus_test()
+write_ft_from_reg_to_mem(num=ft_num)
+time.sleep(1)
+read_ft_from_mem(num=ft_num)
+time.sleep(1)
+run_ft(num=ft_num)
+time.sleep(10)
+print(get_time(), "Конец")
+
 

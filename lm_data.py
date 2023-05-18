@@ -39,13 +39,15 @@ class LMData:
         # интерфейс работы с ITB - VCP-CAN
         self.usb_can = usb_can_bridge.MyUSBCANDevice(baudrate=self.baudrate,
                                                      serial_numbers=self.serial_numbers,
-                                                     debug=self.debug,
+                                                     debug=False,  # self.debug,
                                                      crc=self.crc_check,
                                                      )
         # заготовка для хранения данных прибора
         self.general_data = []
+        self.load_parameters_data = {}
         self.tmi_dict = {}
         self.graph_interval = 3600
+        self.transaction_busy = False
         # заготовка для хранения и отображения параметров работы прибора
         # заготовка для хранения результата циклограммы
         self.cycl_result_offset = 1280
@@ -55,7 +57,9 @@ class LMData:
         self.com_registers = []
         self.instamessage_data = [0 for i in range(128)]
         #
-        self.mem_num = 2  # 0 - all mem, 1 - pl sol
+        self.flash_data = {"rd": [0xfe for i in range(0x80000)], "ctrl_reg": []}
+        #
+        self.mem_num = 9  # 0 - all mem, 1 - pl sol
         self.mem_data = [[] for i in range(self.mem_num)]
         # заготовка для хранения переменных общения с ПН
         self.pl_iss_data = {"pl_sol": []}
@@ -68,13 +72,13 @@ class LMData:
         pass
 
     def send_cmd(self, mode="dbg_led_test", action="start"):
-        req_param_dict = {"can_num": 0,
-                          "dev_id": self.address,
-                          "mode": "write",
-                          "var_id": 2,
-                          "offset": 16,
-                          "d_len": 1,
-                          "data": [0x01]}
+        req_param_dict =   {"can_num": 0,
+                            "dev_id": self.address,
+                            "mode": "write",
+                            "var_id": 2,
+                            "offset": 16,
+                            "d_len": 1,
+                            "data": [0x01]}
         if action == "start":
             req_param_dict["data"] = [0x01]
         elif action == "stop":
@@ -88,14 +92,31 @@ class LMData:
         self._print("send com<%s> <%s>" % (mode, action))
         self.usb_can.request(**req_param_dict)
 
+    def busy(self):
+        return not self.usb_can.ready_to_transaction
+
+    def wait_busy(self, timeout=0.1):
+        """
+        Ожидание занятости приемо-передатчика
+        :param timeout: секунды, таймаут ожидания
+        :return: время ожидания секунды
+        """
+        start = time.perf_counter_ns()
+        while (time.perf_counter_ns() - start) < timeout*10E9:
+            time.sleep(0.001)
+            if not self.busy():
+                break
+        stop = time.perf_counter_ns()
+        return (stop - start)/10E9
+
     def read_cmd_status(self, mode="dbg_led_test"):
-        req_param_dict = {"can_num": 0,
-                          "dev_id": self.address,
-                          "mode": "read",
-                          "var_id": 3,
-                          "offset": 16,
-                          "d_len": 1,
-                          "data": [0x01]}
+        req_param_dict =   {"can_num": 0,
+                            "dev_id": self.address,
+                            "mode": "read",
+                            "var_id": 3,
+                            "offset": 16,
+                            "d_len": 1,
+                            "data": [0x01]}
         if mode in "dbg_led_test":
             req_param_dict["offset"] = 16
         elif mode in "lm_init":
@@ -107,15 +128,15 @@ class LMData:
 
     def send_cmd_reg(self, mode="dbg_led_test", data=None):
         if data is not None:
-            req_param_dict = {"can_num": 0,
-                              "dev_id": self.address,
-                              "mode": "write",
-                              "var_id": 4,
-                              "offset": 16,
-                              "d_len": len(data),
-                              "data": data}
+            req_param_dict =   {"can_num": 0,
+                                "dev_id": self.address,
+                                "mode": "write",
+                                "var_id": 4,
+                                "offset": 16,
+                                "d_len": len(data),
+                                "data": data}
             if mode in "dbg_led_test":
-                req_param_dict["offset"] = 0x30
+                req_param_dict["offset"] = 0x40
             elif mode in "synch_time":
                 req_param_dict["offset"] = 0x00
             elif mode in "const_mode":
@@ -124,16 +145,46 @@ class LMData:
                 req_param_dict["offset"] = 0x05
             elif mode in "mem_rd_ptr":
                 req_param_dict["offset"] = 0x07
+            elif mode in "write_ft_to_mem":
+                req_param_dict["offset"] = 0x0C
+            elif mode in "read_ft_from_mem":
+                req_param_dict["offset"] = 0x0D
+            elif mode in "read_ft_from_regs":
+                req_param_dict["offset"] = 0x0E
+            elif mode in "run_ft":
+                req_param_dict["offset"] = 0x0F
             elif mode in "lm_mode":
                 req_param_dict["offset"] = 0x10
             elif mode in "lm_pn_pwr_switch":
                 req_param_dict["offset"] = 0x11
-            elif mode in "pl_sol_cg_start":
+            elif mode in "lm_pn_pwr_switch_on":
                 req_param_dict["offset"] = 0x12
-            elif mode in "pl_sol_cg_stop":
+            elif mode in "lm_pn_pwr_switch_off":
                 req_param_dict["offset"] = 0x13
-            elif mode in "lm_soft_reset":
+            elif mode in "lm_ft_default":
+                req_param_dict["offset"] = 0x14
+            elif mode in "stop_ft":
+                req_param_dict["offset"] = 0x16
+            elif mode in "pl_sol_cg_start":
+                req_param_dict["offset"] = 0x20
+            elif mode in "pl_sol_cg_stop":
+                req_param_dict["offset"] = 0x21
+            elif mode in "pl_sol_get_tmi":
+                req_param_dict["offset"] = 0x22
+            elif mode in "pl_sol_win_ctrl":
+                req_param_dict["offset"] = 0x23
+            elif mode in "pl_sol_start_exp":
+                req_param_dict["offset"] = 0x24
+            elif mode in "pl_sol_get_frr":
+                req_param_dict["offset"] = 0x26
+            elif mode in "pl_sol_get_fr":
                 req_param_dict["offset"] = 0x27
+            elif mode in "pl_brk_get_tmi":
+                req_param_dict["offset"] = 0x28
+            elif mode in "pl_sol_mb_param_wr":
+                req_param_dict["offset"] = 0x2A
+            elif mode in "lm_soft_reset":
+                req_param_dict["offset"] = 0x30
             else:
                 raise ValueError("Incorrect method parameter <mode>")
             self._print("send com_reg<%s>: " % mode, data)
@@ -149,25 +200,73 @@ class LMData:
                               "d_len": leng,
                               "data": []}
             if mode in "dbg_led_test":
-                req_param_dict["offset"] = 0x30
+                req_param_dict["offset"] = 0x40
             elif mode in "synch_time":
                 req_param_dict["offset"] = 0x00
             elif mode in "const_mode":
                 req_param_dict["offset"] = 0x04
+            elif mode in "mem_init":
+                req_param_dict["offset"] = 0x05
+            elif mode in "mem_rd_ptr":
+                req_param_dict["offset"] = 0x07
+            elif mode in "write_ft_to_mem":
+                req_param_dict["offset"] = 0x0C
+            elif mode in "read_ft_from_mem":
+                req_param_dict["offset"] = 0x0D
+            elif mode in "read_ft_from_regs":
+                req_param_dict["offset"] = 0x0E
+            elif mode in "run_ft":
+                req_param_dict["offset"] = 0x0F
             elif mode in "lm_mode":
                 req_param_dict["offset"] = 0x10
             elif mode in "lm_pn_pwr_switch":
                 req_param_dict["offset"] = 0x11
-            elif mode in "pl_sol_cg_start":
+            elif mode in "lm_pn_pwr_switch_on":
                 req_param_dict["offset"] = 0x12
-            elif mode in "pl_sol_cg_stop":
+            elif mode in "lm_pn_pwr_switch_off":
                 req_param_dict["offset"] = 0x13
-            elif mode in "lm_soft_reset":
+            elif mode in "pl_sol_cg_start":
+                req_param_dict["offset"] = 0x20
+            elif mode in "pl_sol_cg_stop":
+                req_param_dict["offset"] = 0x21
+            elif mode in "pl_sol_get_tmi":
+                req_param_dict["offset"] = 0x22
+            elif mode in "pl_sol_win_ctrl":
+                req_param_dict["offset"] = 0x23
+            elif mode in "pl_sol_start_exp":
+                req_param_dict["offset"] = 0x24
+            elif mode in "pl_sol_get_frr":
+                req_param_dict["offset"] = 0x26
+            elif mode in "pl_sol_get_fr":
                 req_param_dict["offset"] = 0x27
+            elif mode in "pl_sol_get_tmi":
+                req_param_dict["offset"] = 0x28
+            elif mode in "lm_soft_reset":
+                req_param_dict["offset"] = 0x30
             else:
                 raise ValueError("Incorrect method parameter <mode>")
             self._print("read com_reg<%s>" % mode)
             self.usb_can.request(**req_param_dict)
+
+    def write_ft_regs(self, num=0, step=0, step_data=None):
+        if step_data is not None:
+            if len(step_data) == 64:
+                req_param_dict = {"can_num": 0,
+                                  "dev_id": self.address,
+                                  "mode": "write",
+                                  "var_id": 8,
+                                  "offset": 0,
+                                  "d_len": 64,
+                                  "data": step_data}
+                if num < 5:
+                    for ft_num in range(5):
+                        req_param_dict["offset"] = num*2048+64*step
+                else:
+                    raise ValueError("Incorrect method parameter <mode>")
+                self._print(f"write step {step} to ft_{num}_regs")
+                self.usb_can.request(**req_param_dict)
+            else:
+                raise ValueError(f"Incorect data len <{len(step_data)}>")
 
     def read_tmi(self, mode="beacon"):
         req_param_dict = {"can_num": 0,
@@ -184,7 +283,15 @@ class LMData:
         elif mode in "lm_full_tmi":
             req_param_dict["offset"] = 256
         elif mode in "lm_load_param":
-            req_param_dict["offset"] = 256
+            req_param_dict["offset"] = 384
+        elif mode in "pl_sol_tmi":
+            req_param_dict["offset"] = 512
+        elif mode in "pl_brk_tmi":
+            req_param_dict["offset"] = 640
+        elif mode in "loaded_cfg":
+            req_param_dict["offset"] = 768
+        elif mode in "cfg_to_save":
+            req_param_dict["offset"] = 896
         else:
             raise ValueError("Incorrect method parameter <mode>")
         self._print("read tmi <%s>" % mode)
@@ -203,7 +310,7 @@ class LMData:
         self._print("read cyclogram result <offset %d>" % req_param_dict["offset"])
         self.usb_can.request(**req_param_dict)
 
-    def read_mem(self, mode="mem_all"):
+    def read_mem(self, mode="mem_all", part=-1):
         req_param_dict = {"can_num": 0,
                           "dev_id": self.address,
                           "mode": "read",
@@ -211,51 +318,132 @@ class LMData:
                           "offset": 0,
                           "d_len": 128,
                           "data": []}
-        if mode in "mem_all":
-            req_param_dict["offset"] = 0
-        elif mode in "pl_sol_mem":
-            req_param_dict["offset"] = 128
-        elif mode in "dcr_mem":
-            req_param_dict["offset"] = 256
+        if part == -1:
+            if mode in "mem_all":
+                req_param_dict["offset"] = 0*128
+            elif mode in "lm_mem":
+                req_param_dict["offset"] = 1*128
+            elif mode in "pl_sol_mem":
+                req_param_dict["offset"] = 2*128
+            elif mode in "pl_brk_mem":
+                req_param_dict["offset"] = 3*128
+            elif mode in "ft0_mem":
+                req_param_dict["offset"] = 4*128
+            elif mode in "ft1_mem":
+                req_param_dict["offset"] = 5*128
+            elif mode in "ft2_mem":
+                req_param_dict["offset"] = 6*128
+            elif mode in "ft3_mem":
+                req_param_dict["offset"] = 7*128
+            elif mode in "ft4_mem":
+                req_param_dict["offset"] = 8*128
+            else:
+                raise ValueError("Incorrect method parameter <mode>")
+            self._print("read <%s>" % mode)
+            self.usb_can.request(**req_param_dict)
+        elif part >= 0:
+            req_param_dict["offset"] = (part+1)*128
+            self._print("read part <%d>" % part)
+            self.usb_can.request(**req_param_dict)
+
+    def write_flash_sw(self, offset=0, data=None):
+        if data is not None:
+            if offset + len(data) < 0x80000:
+                req_param_dict = {"can_num": 0, "dev_id": self.address, "mode": "write", "var_id": 14, "offset": offset,
+                                  "d_len": len(data), "data": data}
+            else:
+                raise ValueError(f"Out of bound flash mem^ max is 0x80000, 0x{offset + len(data):05X}")
         else:
-            raise ValueError("Incorrect method parameter <mode>")
-        self._print("read <%s>" % mode)
+            raise ValueError("Data is empty")
+        self._print("write flash data <%s>: " % data)
+        self.usb_can.request(**req_param_dict)
+
+    def read_flash_sw(self, offset=0, leng=128):
+        if offset + leng < 0x80000:
+            req_param_dict = {"can_num": 0, "dev_id": self.address, "mode": "read", "var_id": 14, "offset": offset,
+                              "d_len": leng, "data": [0]}
+        else:
+            raise ValueError(f"Out of bound flash mem: max is 0x80000, 0x{offset + leng:05X}")
+        self.usb_can.request(**req_param_dict)
+
+    def reset_flash_sw_data(self):
+        self.flash_data["rd"] = [0xfe for i in range(0x80000)]
+
+    def write_flash_ctrl(self, data=None):
+        if data is not None:
+            if len(data) <= 8:
+                req_param_dict = {"can_num": 0, "dev_id": self.address,
+                                  "mode": "write",
+                                  "var_id": 14,
+                                  "offset": 0x80000,
+                                  "d_len": len(data), "data": data}
+            else:
+                raise ValueError(f"Incorrect data len: must be 8 now - {len(data)}")
+        else:
+            raise ValueError("Data is empty")
+        self._print("write flash ctrl reg<%s>: " % data)
+        self.usb_can.request(**req_param_dict)
+
+    def read_flash_ctrl(self):
+        self.flash_data["ctrl_reg"] = []
+        req_param_dict = {"can_num": 0, "dev_id": self.address,
+                          "mode": "read",
+                          "var_id": 14,
+                          "offset": 0x80000,
+                          "d_len": 8, "data": []}
         self.usb_can.request(**req_param_dict)
 
     def parc_data(self):
         while True:
             time.sleep(0.01)
             id_var_row, data = self.usb_can.get_data()
-            res1, rtr, res2, offset, var_id, dev_id = self.usb_can.process_id_var(id_var_row)
-            with self.data_lock:
-                if var_id == 5:  # переменная телеметрии
-                    report_data = " ".join([("%02X" % var) for var in data])
-                    self._print("process tmi <var_id = %d, offset %d>" % (var_id, offset), report_data)
-                    parced_data = norby_data.frame_parcer(data)
-                    if offset == 256:
-                        self.manage_general_data(parced_data)
-                    elif 1280 <= offset < 5504:
-                        self.manaage_cyclogram_result_data(offset, data)
-                    pass
-                elif var_id == 7:  # переменная памяти
-                    self._print("process mem <var_id = %d, offset %d>" % (var_id, offset))
-                    self.manage_mem_data(offset, data)
-                    pass
-                elif var_id == 3:  # статусы функций
-                    self._print("process cmd_status <var_id = %d, offset %d>:" % (var_id, offset), data)
-                    pass
-                elif var_id == 4:  # статусные регистры
-                    self._print("process cmd_regs <var_id = %d, offset %d>:" % (var_id, offset), data)
-                    self.com_registers = copy.deepcopy(data)
-                    pass
-                elif var_id == 9:  # результат общения с ПН
-                    self._print("process instamessage <var_id = %d, offset %d>:" % (var_id, offset), list_to_str(data))
-                    self.parc_instamessage_data(offset, data)
-                    self.instamessage_data = copy.deepcopy(data)
-                    pass
+            if data is not None:
+                res1, rtr, res2, offset, var_id, dev_id = self.usb_can.process_id_var(id_var_row)
+                with self.data_lock:
+                    if var_id == 5:  # переменная телеметрии
+                        report_data = " ".join([("%02X" % var) for var in data])
+                        self._print("process tmi <var_id = %d, offset %d>" % (var_id, offset), report_data)
+                        parced_data = norby_data.frame_parcer(data)
+                        if offset == 256:
+                            self.manage_general_data(parced_data)
+                        elif offset == 384:
+                            self.manage_load_parameters_data(parced_data)
+                        elif 1280 <= offset < 5504:
+                            self.manaage_cyclogram_result_data(offset, data)
+                        pass
+                    elif var_id == 7:  # переменная памяти
+                        self._print("process mem <var_id = %d, offset %d>" % (var_id, offset))
+                        self.manage_mem_data(offset, data)
+                        pass
+                    elif var_id == 3:  # статусы функций
+                        self._print("process cmd_status <var_id = %d, offset %d>:" % (var_id, offset), data)
+                        pass
+                    elif var_id == 4:  # статусные регистры
+                        self._print("process cmd_regs <var_id = %d, offset %d>:" % (var_id, offset), data)
+                        self.com_registers = copy.deepcopy(data)
+                        pass
+                    elif var_id == 9:  # результат общения с ПН
+                        self._print("process instamessage <var_id = %d, offset %d>:" % (var_id, offset), list_to_str(data))
+                        #self.parc_instamessage_data(offset, data)
+                        self.instamessage_data = copy.deepcopy(data)
+                        pass
+                    elif var_id == 14:  # работа с переменной загрузки Flush
+                        self._print("process flash <var_id = %d, offset %d>:" % (var_id, offset), list_to_str(data))
+                        self.parc_flash_data(offset, data)
+                        self.instamessage_data = copy.deepcopy(data)
+                        pass
+            else:
+                self.transaction_busy = False
             if self._close_event.is_set() is True:
                 self._close_event.clear()
                 return
+        pass
+
+    def parc_flash_data(self, offset, data):
+        if offset == 0x80000:
+            self.flash_data["ctrl_reg"] = data
+        elif 0 <= offset < 0x80000:
+            self.flash_data["rd"][offset: offset+len(data)] = data
         pass
 
     def manage_general_data(self, frame_data):
@@ -287,6 +475,12 @@ class LMData:
         else:
             self._print("m: manage_general_data frame_data_error")
 
+    def manage_load_parameters_data(self, frame_data):
+        if len(frame_data) >= 4:
+            self.load_parameters_data = {pair[0]: pair[1] for pair in frame_data}
+        else:
+            self._print("m: manage_general_data frame_data_error")
+
     def reset_general_data(self):
         self.general_data = []
 
@@ -309,7 +503,6 @@ class LMData:
                     var[2].pop(0)
         pass
 
-     # cyclogram result_data
     def manaage_cyclogram_result_data(self, offset, data):
         part_num = (offset - self.cycl_result_offset) // 128
         if data[0] == 0xF1 and data[1] == 0x0F:
@@ -378,11 +571,11 @@ class LMData:
     # mem data #
     def manage_mem_data(self, offset, data):
         mem_num = offset // 128
-        self._print("manage_mem_data: offset: %d, data: " % offset, list_to_str(data))
+        self._print("manage_mem_data: offset: %d, data: " % offset, list_to_str(data, u16_rev=True))
         if mem_num == 0:  # all mem
             self.mem_data[mem_num] = copy.deepcopy(data)
             pass
-        elif mem_num == 1:
+        elif mem_num < self.mem_num:
             self.mem_data[mem_num] = copy.deepcopy(data)
             pass
         else:
@@ -392,7 +585,7 @@ class LMData:
     def get_mem_data(self, num):
         try:
             if self.mem_data[num]:
-                ret_str = list_to_str(self.mem_data[num]) + "\n"
+                ret_str = list_to_str(self.mem_data[num], u16_rev=True)
                 self.mem_data[num] = []
                 return ret_str
             return None
@@ -427,18 +620,22 @@ class LMData:
 
     @staticmethod
     def get_time():
-        return time.strftime("%H-%M-%S", time.localtime()) + " " + ("%.3f:" % time.perf_counter())
+        return time.strftime("%H-%M-%S", time.localtime()) + "." + ("%.3f:" % time.perf_counter()).split(".")[1]
 
 
 def value_from_bound(val, val_min, val_max):
     return max(val_min, min(val_max, val))
 
 
-def list_to_str(input_list):
+def list_to_str(input_list, u16_rev=False):
     return_str = ""
     if input_list:
         for i in range(len(input_list)):
-            return_str += "%02X" % input_list[i]
+            if u16_rev:
+                num = i - 1 if i % 2 else i + 1
+            else:
+                num = i
+            return_str += "%02X" % input_list[num]
             if i % 2 == 1:
                 return_str += " "
         return return_str

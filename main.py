@@ -25,10 +25,10 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
         self.setWindowTitle("Norby - Linking Module. Version {:s}".format(version))
         # класс для управления устройством
         self.lm = lm_data.LMData( serial_numbers=
-                                  ["0000ACF0", "205135995748", "205B359A", "2056359A",
-                                   "2059359A", "365938753038", "365638633038", "365638633038",
-                                   "206E359D5748"],
-                                  debug=True, address=6)
+                                    ["0000ACF0", "205135995748", "205B359A", "2056359A",
+                                    "2059359A", "365938753038", "365638633038", "365638633038",
+                                    "206E359D5748"],
+                                    debug=True, address=6)
         self.connectionPButt.clicked.connect(self.lm.usb_can.reconnect)
         # таб с кан-терминалом
         self.can_usb_client_widget = can_unit.ClientGUIWindow(self, interface=self.lm.usb_can)
@@ -50,8 +50,8 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
         #
         self.allChannelsChBox.clicked.connect(self.pwr_all_channel_choice)
         self.pwr_channels_list = [self.lmChannelsChBox, self.plSOLChannelsChBox, self.pl11bChannelsChBox,
-                                  self.pl12ChannelsChBox, self.pl20ChannelsChBox, self.dcr1ChannelsChBox,
-                                  self.dcr2ChannelsChBox]
+                                    self.pl12ChannelsChBox, self.pl20ChannelsChBox, self.dcr1ChannelsChBox,
+                                    self.dcr2ChannelsChBox]
         # работ с ПН СОЛ
         self.plSOLRunCgPButton.clicked.connect(self.pl_sol_start_cg)
         self.plSOLStopCgPButton.clicked.connect(self.pl_sol_stop_cg)
@@ -61,6 +61,18 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
         self.plSolReadFullMemPButt.clicked.connect(self.pl_sol_read_full_mem_start)
         self.plSolReadMemTimer = QtCore.QTimer()
         self.plSolReadMemTimer.timeout.connect(self.pl_sol_read_full_mem_process)
+        self.plSolGetTMIPButton.clicked.connect(self.pl_sol_get_tmi)
+        self.plSolGetFRRPButton.clicked.connect(self.pl_sol_get_frr)
+        self.plSolGetFRPButton.clicked.connect(self.pl_sol_get_fr)
+        self.plSolStartExpPButton.clicked.connect(self.pl_sol_start_exp)
+        self.plSolCloseWinPButton.clicked.connect(self.pl_sol_close_window)
+        self.plSolOpenWinPButton.clicked.connect(self.pl_sol_open_window)
+        self.plSolMBParamWrPButton.clicked.connect(self.pl_sol_mb_parameters_write)
+        # ПН БРК
+        self.plBRKGetTMIPButton.clicked.connect(self.pl_brk_get_tmi)
+        # полетные задания
+        self.ftStartPButton.clicked.connect(self.ft_start)
+        self.ftStopPButton.clicked.connect(self.ft_stop)
         # окно с результатом циклограммы
         self.cycl_result_win = cyclogram_result.Widget()
         # общие функции
@@ -200,7 +212,7 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
         pass
 
     def pl_sol_read_full_mem_start(self):
-        self.pl_sol_mem_rd_num = 1002
+        self.pl_sol_mem_rd_num = self.plSolRdMemSBox.value()
         self.pl_sol_mem_rd_ptr = 0
         self.plSolReadMemTimer.start(400)
         self.pl_sol_mem_data = []
@@ -211,26 +223,81 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
         pass
 
     def pl_sol_read_full_mem_process(self):
-        self.pl_sol_mem_data.append(self.lm.get_mem_data(1))
+        self.pl_sol_mem_data.append(self.lm.get_mem_data(2))
         if self.pl_sol_mem_rd_ptr < self.pl_sol_mem_rd_num:
             self.lm.read_mem(mode="pl_sol_mem")
         #
-        self.plSolReadFullMemPBar.setValue(100*self.pl_sol_mem_rd_ptr/self.pl_sol_mem_rd_num)
+        self.plSolReadFullMemPBar.setValue(int(100*self.pl_sol_mem_rd_ptr//self.pl_sol_mem_rd_num))
         #
         if self.pl_sol_mem_rd_ptr < self.pl_sol_mem_rd_num:
             self.pl_sol_mem_rd_ptr += 1
         else:
             self.plSolReadMemTimer.stop()
-
             self.close_log_file(self.pl_sol_mem_log_file)
             self.pl_sol_mem_log_file = self.create_log_file(self.pl_sol_mem_log_file, sub_dir="PL_SOL_Mem", prefix="PL_SOL_Mem", extension=".txt")
-            self.pl_sol_mem_log_file.write("".join(self.pl_sol_mem_data))
+            self.pl_sol_mem_log_file.write("\n".join(self.pl_sol_mem_data))
+            self.close_log_file(self.pl_sol_mem_log_file)
             return
+        pass
+
+    def pl_sol_get_tmi(self):
+        self.lm.send_cmd_reg(mode="pl_sol_get_tmi", data=[0x00])
+        pass
+
+    def pl_sol_get_frr(self):
+        self.lm.send_cmd_reg(mode="pl_sol_get_frr", data=[0x00])
+        pass
+
+    def pl_sol_get_fr(self):
+        self.lm.send_cmd_reg(mode="pl_sol_get_fr", data=[0x00])
+        pass
+
+    def pl_sol_start_exp(self):
+        num = self.plSolExpSBox.value()
+        self.lm.send_cmd_reg(mode="pl_sol_start_exp", data=self.get_list_from_int16_val(num))
+        pass
+
+    def pl_sol_close_window(self):
+        self.lm.send_cmd_reg(mode="pl_sol_win_ctrl", data=[0xA0 & 0xFF])
+        pass
+
+    def pl_sol_open_window(self):
+        self.lm.send_cmd_reg(mode="pl_sol_win_ctrl", data=[0xA1 & 0xFF])
+        pass
+
+    def pl_sol_mb_parameters_write(self):
+        mb_addr     = (self.mbADDRSBox.value() - 0x100) & 0xFF
+        mb_reg_cng  = self.mbRegCntSBox.value() & 0xFF
+        mb_reg_list =  self.get_list_from_int16_val(self.mbReg0SBox.value()) + \
+                            self.get_list_from_int16_val(self.mbReg1SBox.value())
+        data = [mb_addr, mb_reg_cng] + mb_reg_list
+        print([f"{var:02X} " for var in data])
+        self.lm.send_cmd_reg(mode="pl_sol_mb_param_wr", data=data)
+        pass
+
+    # pl brk
+    def pl_brk_get_tmi(self):
+        self.lm.send_cmd_reg(mode="pl_brk_get_tmi", data=[0x00])
+        pass
+
+    # flight task
+    def ft_start(self):
+        num = self.ftNumSBox.value()
+        self.lm.send_cmd_reg(mode="run_ft", data=[num & 0xFF])
+        pass
+
+    def ft_stop(self):
+        num = self.ftStopNumSBox.value()
+        self.lm.send_cmd_reg(mode="stop_ft", data=[num & 0xFF])
         pass
 
     @staticmethod
     def get_list_from_int32_val(val):
         return [((val >> 0) & 0xff), ((val >> 8) & 0xff), ((val >> 16) & 0xff), ((val >> 24) & 0xff)]
+
+    @staticmethod
+    def get_list_from_int16_val(val):
+        return [((val >> 0) & 0xff), ((val >> 8) & 0xff)]
 
     @staticmethod
     def get_u32_from_ledit(line_edit):
@@ -270,8 +337,7 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
         dir_name = "Logs"
         sub_dir_name = dir_name + "\\" + time.strftime("%Y_%m_%d", time.localtime()) + " " + sub_dir
         if sub_sub_dir:
-            sub_sub_dir_name = sub_dir_name + "\\" + time.strftime("%Y_%m_%d %H-%M-%S ",
-                                                               time.localtime()) + sub_dir
+            sub_sub_dir_name = sub_dir_name + "\\" + time.strftime("%Y_%m_%d %H-%M-%S ", time.localtime()) + sub_dir
         else:
             sub_sub_dir_name = sub_dir_name
         try:
