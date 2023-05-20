@@ -402,13 +402,13 @@ def write_ft_regs(num=0):
 
     """
     delay = 0.2
-    lm.write_ft_regs(num=num, step=0, step_data=form_step_data(0, 0, 0, 1000, 0, 0x00, 0x00, [0x01]))
+    lm.write_ft_regs(num=num, step=0, step_data=form_step_data(0, 0, 0, 3000, 0, 0x00, 0x00, [0x01]))
     time.sleep(delay)
     lm.write_ft_regs(num=num, step=1, step_data=form_step_data(0, 1, 0, 1000, 0x01, 0x00, 0x00, [0]))
     time.sleep(delay)
-    lm.write_ft_regs(num=num, step=2, step_data=form_step_data(0, 0, 0, 1000, 0, 0x00, 0x00, [0x00]))
+    lm.write_ft_regs(num=num, step=2, step_data=form_step_data(0, 0, 0, 3000, 0, 0x00, 0x00, [0x00]))
     time.sleep(delay)
-    lm.write_ft_regs(num=num, step=3, step_data=form_step_data(0, 1, 0, 1000, 0x01, 0x00, 0x05, [0]))
+    lm.write_ft_regs(num=num, step=3, step_data=form_step_data(0, 1, 0, 1000, 0x01, 0x00, 0x02, [0]))
     for i in range(4, 32):
         time.sleep(delay)
         lm.write_ft_regs(num=num, step=i, step_data=[0 for i in range(64)])
@@ -446,7 +446,7 @@ time.sleep(1)
 read_ft_from_mem(num=ft_num)
 time.sleep(1)
 run_ft(num=ft_num)
-time.sleep(10)
+time.sleep(1)
 print(get_time(), "Конец")
 
 

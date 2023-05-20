@@ -10,8 +10,9 @@ import data_vis
 import can_unit
 import pay_load
 import cyclogram_result
+import json
 
-version = "0.14.3"
+version = "0.15.0"
 
 
 class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
@@ -73,6 +74,7 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
         # полетные задания
         self.ftStartPButton.clicked.connect(self.ft_start)
         self.ftStopPButton.clicked.connect(self.ft_stop)
+        self.ftSetDefPButton.clicked.connect(self.ft_set_def)
         # окно с результатом циклограммы
         self.cycl_result_win = cyclogram_result.Widget()
         # общие функции
@@ -95,6 +97,9 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
 
         self.logRestartPButt.clicked.connect(self.recreate_log_files)
         self.recreate_log_files()
+        # ## Общие ## #
+        self.graphCfgSaveButton.clicked.connect(self.save_init_cfg)
+        self.graphCfgLoadButton.clicked.connect(self.load_init_cfg)
 
         # UI #
     def update_ui(self):
@@ -291,6 +296,11 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
         self.lm.send_cmd_reg(mode="stop_ft", data=[num & 0xFF])
         pass
 
+    def ft_set_def(self):
+        num = self.ftSetDefNumSBox.value()
+        self.lm.send_cmd_reg(mode="lm_ft_default", data=[0xAB, num & 0xFF])
+        pass
+
     @staticmethod
     def get_list_from_int32_val(val):
         return [((val >> 0) & 0xff), ((val >> 8) & 0xff), ((val >> 16) & 0xff), ((val >> 24) & 0xff)]
@@ -375,6 +385,19 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
                 file = None
         pass
 
+    def load_init_cfg(self):
+        with open("init_cfg.json") as complex_data:
+            data = complex_data.read()
+            json_cfg = json.loads(data)
+            # print(type(json_cfg["data_vis"]), json_cfg["data_vis"])
+            self.graph_window.set_cfg(json_cfg["data_vis"])
+        pass
+
+    def save_init_cfg(self):
+        cfg_dict = {"data_vis": self.graph_window.get_cfg()}
+        with open("init_cfg.json", "w") as write_file:
+            json.dump(cfg_dict, write_file, sort_keys=True, indent=4)
+        pass
     #
     def closeEvent(self, event):
         self.close_log_file(file=self.data_log_file)

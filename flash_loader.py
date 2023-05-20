@@ -135,8 +135,8 @@ def get_time():
     return time.strftime("%H-%M-%S", time.localtime()) + "." + ("%.3f:" % time.perf_counter()).split(".")[1]
 
 
-sw_path_p1 = "bin\\oai_lm_mcu_v2_8_00.bin"
-sw_path_p2 = "bin\\oai_lm_mcu_v2_8_01.bin"
+sw_path_p1 = "bin\\oai_lm_mcu_v2_10_0.bin"
+sw_path_p2 = "bin\\oai_lm_mcu_v2_10_1.bin"
 
 
 if __name__ == "__main__":
@@ -177,8 +177,12 @@ if __name__ == "__main__":
     fl.lm.wait_busy()
     time.sleep(1)
     print(fl.read_status())
-    #
-    if True:
+    # #
+    # fl.erase()
+    # fl.lm.wait_busy()
+    # time.sleep(2)
+    # #
+    if False:
         # #
         fl.erase()
         fl.lm.wait_busy()

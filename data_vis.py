@@ -409,10 +409,31 @@ class Widget(QtWidgets.QWidget, data_vis_widget.Ui_dataVisWidgetOName):
         self.addUnitPButton.clicked.connect(self.add_unit)
         self.removeUnitPButton.clicked.connect(self.delete_unit)
         self.restartPButton.clicked.connect(self.restart_graph_signal.emit)
+        # сохранение/восстановление параметров
+        self.cfg = None
         # обновление gui
         self.redraw_period = 500
         self.DataUpdateTimer = QtCore.QTimer()
         self.DataUpdateTimer.singleShot(1000, self.update_ui)
+
+    def get_cfg(self):
+        cfg_dict = {'units_num': len(self.units),
+                    'table_ch_box_state_list': []
+                    }
+        for num, unit in enumerate(self.units.unit_list):
+            row_count = len(self.data_list)
+            cfg_dict['table_ch_box_state_list'].append(unit.get_ch_box_st_list())
+        return cfg_dict
+
+    def set_cfg(self, cfg_dict):
+        while cfg_dict["units_num"] > len(self.units):
+            self.add_unit()
+            # print("add_unit")
+        for num, unit in enumerate(self.units.unit_list):
+            unit.set_ch_box_st_list(cfg_dict["table_ch_box_state_list"][num])
+            # print(cfg_dict["table_ch_box_state_list"][num])
+            self.set_active_unit_ch_box_list()
+        pass
 
     # table
     def table_init(self):

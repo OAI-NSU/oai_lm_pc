@@ -74,6 +74,15 @@ def frame_parcer(frame):
                             data.append(["Пам.%d объем" % i, "%d" % (val_from(frame, (44 + i * 8), 2))])
                             data.append(["Пам.%d запол,%%" % i, "%.2f" % (val_from(frame, (46 + i * 8), 2)/256)])
                         #
+                        offset = 112
+                        data.append([f"{pl}:ft num", "%d" % val_from(frame, offset + 0, 1)])
+                        data.append([f"{pl}:ft mode", "%d" % val_from(frame, offset + 1, 1)])
+                        data.append([f"{pl}:ft fun type", "%d" % (val_from(frame, offset + 2, 1) & 0xF)])
+                        data.append([f"{pl}:ft fun cmd", "%d" % (val_from(frame, offset + 2, 1) >> 4)])
+                        data.append([f"{pl}:ft step_num", "%d" % val_from(frame, offset + 3, 1)])
+                        data.append([f"{pl}:ft rpt_value", "%d" % val_from(frame, offset + 4, 2)])
+                        data.append([f"{pl}:ft frame_num", "%d" % val_from(frame, offset + 6, 2)])
+                        #
                         data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
                     elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == lm_full_tmi:
                         #
@@ -109,15 +118,7 @@ def frame_parcer(frame):
                                 data.append([f"{pl}:rd_ptr", "%d" % val_from(frame, offset + 12, 2)])
                                 data.append([f"{pl}:full_volume", "%d" % val_from(frame, offset + 14, 2)])
                                 data.append([f"{pl}:mem_fullness", "%.3f" % val_from(frame, offset + 16, 2)])
-                        #
-                        offset = 112
-                        data.append([f"{pl}:ft num", "%d" % val_from(frame, offset + 0, 1)])
-                        data.append([f"{pl}:ft mode", "%d" % val_from(frame, offset + 1, 1)])
-                        data.append([f"{pl}:ft fun type", "%d" % (val_from(frame, offset + 2, 1) & 0xF)])
-                        data.append([f"{pl}:ft fun cmd", "%d" % (val_from(frame, offset + 2, 1) >> 4)])
-                        data.append([f"{pl}:ft step_num", "%d" % val_from(frame, offset + 3, 1)])
-                        data.append([f"{pl}:ft rpt_value", "%d" % val_from(frame, offset + 4, 2)])
-                        data.append([f"{pl}:ft frame_num", "%d" % val_from(frame, offset + 6, 2)])
+
                         #
                         data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
                     elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == lm_load_param:
