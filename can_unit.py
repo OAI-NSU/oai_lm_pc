@@ -393,7 +393,6 @@ class ClientGUIWindow(QtWidgets.QFrame, can_usb_bridge_client_widget.Ui_Form):
         # log_files
         for log_str in self.interface.get_can_log():
             self.can_log_file.write(self.get_time() + " " + log_str + "\n")
-            print(log_str)
         for log_str in self.interface.get_serial_log():
             self.serial_log_file.write(self.get_time() + " " + log_str + "\n")
         # state check
