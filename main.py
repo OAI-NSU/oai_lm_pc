@@ -26,10 +26,10 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
         self.setWindowTitle("Norby - Linking Module. Version {:s}".format(version))
         # класс для управления устройством
         self.lm = lm_data.LMData( serial_numbers=
-                                    ["0000ACF0", "205135995748", "205B359A", "2056359A",
+                                    ["0000ACF0", "20513599", "205B359A", "2056359A",
                                     "2059359A", "365938753038", "365638633038", "365638633038",
                                     "206E359D5748"],
-                                    debug=True, address=6)
+                                    debug=False, address=6)
         self.connectionPButt.clicked.connect(self.lm.usb_can.reconnect)
         # таб с кан-терминалом
         self.can_usb_client_widget = can_unit.ClientGUIWindow(self, interface=self.lm.usb_can)
@@ -118,13 +118,17 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
                     pass
                 else:
                     self.log_str = log_str_tmp
-                    self.data_log_file.write(self.log_str.replace(".", ","))
+                    self.data_log_file.write(self.get_time() + " " + self.log_str.replace(".", ","))
             # отображение состояния подключения
             self.statusLEdit.setText(self.lm.usb_can.state_string[self.lm.usb_can.state])
             # передача данных в графики
             self.graph_window.set_graph_data(self.lm.general_data)
         except Exception as error:
             print("update_ui: " + str(error))
+
+    @staticmethod
+    def get_time():
+        return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + "." + ("%.3f" % time.perf_counter()).split(".")[1]
 
     def open_graph_window(self):
         if self.graph_window.isVisible():
@@ -402,6 +406,7 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
     def closeEvent(self, event):
         self.close_log_file(file=self.data_log_file)
         self.graph_window.close()
+        self.can_usb_client_widget.close()
         self.close()
         pass
 
