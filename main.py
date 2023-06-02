@@ -219,7 +219,7 @@ class MainWindow(QtWidgets.QMainWindow, main_win.Ui_MainWindow):
     def pl_sol_read_full_mem_start(self):
         self.pl_sol_mem_rd_num = self.plSolRdMemSBox.value()
         self.pl_sol_mem_rd_ptr = 0
-        self.plSolReadMemTimer.start(400)
+        self.plSolReadMemTimer.start(1000)
         self.pl_sol_mem_data = []
         #
         self.lm.read_mem(mode="pl_sol_mem")
