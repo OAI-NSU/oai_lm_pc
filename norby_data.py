@@ -284,7 +284,47 @@ def frame_parcer(frame):
                             data.append([f"I PDM{i} mean, mA", "%d" % val_from(frame, 114+2*i, 2, signed=True)])
                         #
                         data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
-                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_brk_tmi_2:  # ТМИ солнечных панелей 1
+                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_brk_tmi_1:  # ТМИ солнечных панелей 1
+                        #
+                        data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
+                        data.append(["Время кадра, с", "%d" % val_from(frame, 8, 4)])
+                        #
+                        data.append(["Вер. ТМИ СЭС1 (PAM)", "%d" % val_from(frame, 12, 2)])
+                        data.append(["P полн. PAM, мВт", "%d" % val_from(frame, 14, 2)])
+                        data.append(["Ключи пит. PAM)", "0x%04X" % val_from(frame, 16, 2)])
+                        data.append(["PWR GD", "0x%04X" % val_from(frame, 18, 2)])
+                        data.append(["Статус отк.", "0x%08X" % val_from(frame, 20, 4)])
+                        #
+                        for i in range(4):
+                            data.append([f"T PAM{i}, °C", "%d" % val_from(frame, 24+i, 1, signed=True)])
+                        data.append([f"T median, °C", "%d" % val_from(frame, 24+4, 1, signed=True)])
+                        #
+                        data.append(["Ст. IdealDiod", "0x%04X" % val_from(frame, 29, 1)])
+                        data.append(["Ст. ош. входных к.", "0x%04X" % val_from(frame, 30, 1)])
+                        #
+                        name_list = ["Ch1 Y+", "Ch2 X+", "Ch3 Y-", "Ch4 X-", "Ch5 X- F", "Ch6 Y+ F"]
+                        for i, name in enumerate(name_list):
+                            data.append([f"U {name}, mV", "%d" % val_from(frame, 31 + 2*i, 2)])
+                            data.append([f"I {name}, mA", "%d" % val_from(frame, 43 + 2*i, 2, signed=True)])
+                        #
+                        name_list = ["Ch1 X- F", "Ch2 X-", "Ch3 X+ F", "Ch4 X+", "Ch5 Y+", "Ch6 Y-"]
+                        for i, name in enumerate(name_list):
+                            data.append([f"Статус {name}", "0x%04X" % val_from(frame, 55 + 2*i, 2)])
+                        #
+                        name_list = ["Ch1 X- F", "Ch2 X-", "Ch3 X+ F", "Ch4 X+", "Ch5 Y+", "Ch6 Y-"]
+                        for i, name in enumerate(name_list):
+                            for j in range(4):
+                                data.append([f"T {name} к{j}, °C", "%d" % val_from(frame, 67 + j + 4*i, 1, signed=True)])
+                        #
+                        name_list = ["Ch1 X- F", "Ch2 X-", "Ch3 X+ F", "Ch4 X+", "Ch5 Y+", "Ch6 Y-"]
+                        for i, name in enumerate(name_list):
+                                data.append([f"T median {name}, °C", "%d" % val_from(frame, 91 + i, 1, signed=True)])
+                        #
+                        data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
+                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_brk_tmi_2:  # ТМИ батарей 1
                         #
                         data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
                         data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
@@ -325,7 +365,7 @@ def frame_parcer(frame):
                                 data.append([f"T PBM{i} пл.{j}, °C", "%d" % val_from(frame, 93+1*j+6*i, 1, signed=True)])
                         #
                         data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
-                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_brk_tmi_3:  # ТМИ солнечных панелей 2
+                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_brk_tmi_3:  # ТМИ батарей 2
                         #
                         data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
                         data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
