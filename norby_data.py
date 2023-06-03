@@ -44,8 +44,6 @@ def frame_parcer(frame):
                 b_frame = bytes(frame)
             except Exception as error:
                 print(error)
-
-            # print([f"{var:02X} " for var in frame])
             if 0x0FF1 == val_from(frame, 0, 2):  # проверка на метку кадра
                 if get_id_loc_data(val_from(frame, 4, 2))["dev_id"] == linking_module:
                     if get_id_loc_data(val_from(frame, 4, 2))["data_code"] == lm_beacon:
@@ -280,10 +278,10 @@ def frame_parcer(frame):
                         data.append([f"T PDM median, °C", "%d" % val_from(frame, 73+4, 1, signed=True)])
                         #
                         for i in range(6):
-                            data.append([f"U PDM{i}, mV", "%d" % val_from(frame, 79+12*i, 1, signed=True)])
-                            data.append([f"U PDM{i} mean, mV", "%d" % val_from(frame, 81+12*i, 1, signed=True)])
-                            data.append([f"I PDM{i}, mA", "%d" % val_from(frame, 83+12*i, 1, signed=True)])
-                            data.append([f"I PDM{i} mean, mA", "%d" % val_from(frame, 85+12*i, 1, signed=True)])
+                            data.append([f"U PDM{i}, mV", "%d" % val_from(frame, 78+2*i, 2, signed=False)])
+                            data.append([f"U PDM{i} mean, mV", "%d" % val_from(frame, 90+2*i, 2, signed=False)])
+                            data.append([f"I PDM{i}, mA", "%d" % val_from(frame, 102+2*i, 2, signed=True)])
+                            data.append([f"I PDM{i} mean, mA", "%d" % val_from(frame, 114+2*i, 2, signed=True)])
                         #
                         data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
                     elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_brk_tmi_2:  # ТМИ солнечных панелей 1
