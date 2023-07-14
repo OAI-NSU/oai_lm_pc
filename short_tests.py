@@ -427,6 +427,7 @@ def read_ft_from_regs(num=0):
 
 
 def run_ft(num=0):
+
     lm.send_cmd_reg(mode="run_ft", data=[num])
 
 
