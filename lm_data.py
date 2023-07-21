@@ -571,16 +571,19 @@ class LMData:
     # mem data #
     def manage_mem_data(self, offset, data):
         mem_num = offset // 128
-        self._print("manage_mem_data: offset: %d, data: " % offset, list_to_str(data, u16_rev=True))
-        if mem_num == 0:  # all mem
-            self.mem_data[mem_num] = copy.deepcopy(data)
-            pass
-        elif mem_num < self.mem_num:
-            self.mem_data[mem_num] = copy.deepcopy(data)
+        if data:
+            self._print("manage_mem_data: offset: %d, data: " % offset, list_to_str(data, u16_rev=True))
+            if mem_num == 0:  # all mem
+                self.mem_data[mem_num] = copy.deepcopy(data)
+                pass
+            elif mem_num < self.mem_num:
+                self.mem_data[mem_num] = copy.deepcopy(data)
+                pass
+            else:
+                self._print("manage_mem_data: offset error")
             pass
         else:
-            self._print("manage_mem_data: offset error")
-        pass
+            self._print("manage_mem_data: data error")
 
     def get_mem_data(self, num):
         try:
@@ -588,9 +591,9 @@ class LMData:
                 ret_str = list_to_str(self.mem_data[num], u16_rev=True)
                 self.mem_data[num] = []
                 return ret_str
-            return None
+            return " "
         except IndexError:
-            return None
+            return " "
 
     # LOG data #
     def get_log_file_title(self):
@@ -635,7 +638,10 @@ def list_to_str(input_list, u16_rev=False):
                 num = i - 1 if i % 2 else i + 1
             else:
                 num = i
-            return_str += "%02X" % input_list[num]
+            try:
+                return_str += "%02X" % input_list[num]
+            except IndexError:
+                return_str += "XX"
             if i % 2 == 1:
                 return_str += " "
         return return_str

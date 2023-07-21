@@ -382,6 +382,7 @@ class ClientGUIWindow(QtWidgets.QFrame, can_usb_bridge_client_widget.Ui_Form):
         # LOG-s files
         self.can_log_file = None
         self.serial_log_file = None
+        self.table_log_file = None
         self.recreate_log_files()
         # timers for different purpose
         self.updateTimer = QtCore.QTimer()
@@ -391,13 +392,18 @@ class ClientGUIWindow(QtWidgets.QFrame, can_usb_bridge_client_widget.Ui_Form):
     def update_data(self):
         # log_files
         for log_str in self.interface.get_can_log():
-            self.can_log_file.write(log_str + "\n")
+            self.can_log_file.write(self.get_time() + " " + log_str + "\n")
         for log_str in self.interface.get_serial_log():
-            self.serial_log_file.write(log_str + "\n")
+            self.serial_log_file.write(self.get_time() + " " + log_str + "\n")
         # state check
         self.connectionPButton.setText(self.interface.state_check()[0])
         self.connectionPButton.setStyleSheet('QPushButton {background-color: %s;}' % (self.interface.state_check()[1]))
         pass
+
+    @staticmethod
+    def get_time():
+        return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + "." + ("%.3f" % time.perf_counter()).split(".")[1]
+
 
     def connect(self):
         self.serial_number = self.devIDLEdit.text()
@@ -441,14 +447,18 @@ class ClientGUIWindow(QtWidgets.QFrame, can_usb_bridge_client_widget.Ui_Form):
         self.save_init_cfg()
         #
         if table_data:
+            log_table_data = ""
             self.dataTWidget.setRowCount(len(table_data))
             for row in range(len(table_data)):
                 for column in range(self.dataTWidget.columnCount()):
                     try:
                         table_item = QtWidgets.QTableWidgetItem(table_data[row][column])
                         self.dataTWidget.setItem(row, column, table_item)
+                        log_table_data += table_data[row][column] + ";"
                     except IndexError:
                         pass
+            if self.table_log_file:
+                self.table_log_file.write(self.get_time() + ";" + log_table_data + "\n")
         pass
 
     def dlt_unit(self):
@@ -539,10 +549,10 @@ class ClientGUIWindow(QtWidgets.QFrame, can_usb_bridge_client_widget.Ui_Form):
             if file:
                 file.close()
         except (OSError, NameError, AttributeError) as error:
-            pass
+            print(error)
         file_name = sub_sub_dir_name + "\\" + time.strftime("%Y_%m_%d %H-%M-%S ",
                                                             time.localtime()) + dir_prefix + " " + prefix + extension
-        file = open(file_name, 'a')
+        file = open(file_name, 'a', encoding="utf-8")
         return file
 
     @staticmethod
@@ -551,17 +561,19 @@ class ClientGUIWindow(QtWidgets.QFrame, can_usb_bridge_client_widget.Ui_Form):
             try:
                 file.close()
             except (OSError, NameError, AttributeError) as error:
-                pass
+                print(error)
         pass
 
     def recreate_log_files(self):
         self.can_log_file = self.create_log_file(prefix="can", dir_prefix="CAN-USB_bridge")
         self.serial_log_file = self.create_log_file(prefix="serial", dir_prefix="CAN-USB_bridge")
+        self.table_log_file = self.create_log_file(prefix="table", dir_prefix="CAN-USB_bridge")
         pass
 
     def closeEvent(self, event):
         self.close_log_file(self.serial_log_file)
         self.close_log_file(self.can_log_file)
+        self.close_log_file(self.table_log_file)
 
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем

@@ -13,6 +13,7 @@ data_lock = threading.Lock()
 # раскрашивание переменных
 # модули
 linking_module = 6
+eps = 3
 # тип кадров
 lm_beacon = 0x80
 lm_tmi = 0x81
@@ -23,7 +24,13 @@ pl_sol_tmi = 0x90
 pl_sol_frr = 0x91
 pl_sol_fr = 0x92
 pl_brk_tmi = 0xA0
+pl_brk_tmi = 0xA0
 
+pl_brk_tmi_0 = 0x00
+pl_brk_tmi_1 = 0x01
+pl_brk_tmi_2 = 0x02
+pl_brk_tmi_3 = 0x03
+pl_brk_tmi_4 = 0x04
 
 def frame_parcer(frame):
     try:
@@ -163,8 +170,8 @@ def frame_parcer(frame):
                         #
                         data.append([f"{pl}:F/C", "0x%04X" % val_from(frame, 30+0, 2)])
                         data.append([f"{pl}:state", "0x%04X" % val_from(frame, 30+36, 2)])
-                        data.append([f"{pl}:temp0", "%d" % (val_from(frame, 30+38, 1, signed=True) + 160)])
-                        data.append([f"{pl}:temp1", "%d" % (val_from(frame, 30+39, 1, signed=True) + 160)])
+                        data.append([f"{pl}:temp0", "%d" % (val_from(frame, 30+38, 1, signed=False) + 160 - 273)])
+                        data.append([f"{pl}:temp1", "%d" % (val_from(frame, 30+39, 1, signed=False) + 160 - 273)])
                         data.append([f"{pl}:raddr", "%d" % (val_from(frame, 30+64, 2, signed=False))])
                         data.append([f"{pl}:eaddr", "%d" % (val_from(frame, 30+66, 2, signed=False))])
                         #
@@ -224,6 +231,177 @@ def frame_parcer(frame):
                         data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
                         #
                         data.append(["Неизвестный тип данных", "0"])
+                elif get_id_loc_data(val_from(frame, 4, 2))["dev_id"] == eps:
+                    if get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_brk_tmi_0:
+                        #
+                        data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
+                        data.append(["Время кадра, с", "%d" % val_from(frame, 8, 4)])
+                        #
+                        data.append(["Вер. ТМИ СЭС0 (PMM PDM)", "%d" % val_from(frame, 12, 2)])
+                        data.append(["Режим констант", "0x%02X" % val_from(frame, 14, 1)])
+                        data.append(["Режим СЭС", "0x%02X" % val_from(frame, 15, 1)])
+                        data.append(["Перекл осн/рез", "0x%02X" % val_from(frame, 16, 1)])
+                        data.append(["Выкл.Pass.CPU", "0x%02X" % val_from(frame, 17, 1)])
+                        data.append(["Темп.PMM °C", "0x%02X" % val_from(frame, 18, 1, signed=True)])
+                        data.append(["Ключи PMM", "0x%04X" % val_from(frame, 19, 2)])
+
+                        data.append(["PwrGd PMM", "0x%04X" % val_from(frame, 21, 2)])
+                        data.append(["Статус отказов PMM", "0x%08X" % val_from(frame, 23, 4)])
+                        data.append(["Перезапуски осн", "0x%08X" % val_from(frame, 27, 4)])
+                        data.append(["Перезапуски пезерв", "0x%08X" % val_from(frame, 31, 4)])
+                        data.append(["U VBAT1, mV", "%d" % val_from(frame, 35, 2)])
+                        data.append(["U VBAT2, mV", "%d" % val_from(frame, 37, 2)])
+                        data.append(["U VBAT1 mean, mV", "%d" % val_from(frame, 39, 2)])
+                        data.append(["U VBAT2 mean, mV", "%d" % val_from(frame, 41, 2)])
+                        data.append(["I VBAT1, mA", "%d" % val_from(frame, 43, 2)])
+                        data.append(["I VBAT2, mA", "%d" % val_from(frame, 45, 2)])
+                        data.append(["I VBAT1 mean, mA", "%d" % val_from(frame, 47, 2)])
+                        data.append(["I VBAT2 mean, mA", "%d" % val_from(frame, 49, 2)])
+                        #
+                        data.append(["I СЭС, мА", "%d" % val_from(frame, 51, 2)])
+                        data.append(["U PMM, mV", "%d" % val_from(frame, 53, 2)])
+                        data.append(["U сил. СЭС, mV", "%d" % val_from(frame, 55, 2)])
+                        data.append(["P СЭС, мВт", "%d" % val_from(frame, 57, 2)])
+                        data.append(["P КА+ПН, мВт", "%d" % val_from(frame, 59, 2)])
+                        data.append(["Концевики", "0x%04X" % val_from(frame, 61, 2)])
+                        data.append(["Версия ПО", "%d" % val_from(frame, 63, 2)])
+                        #
+                        data.append(["Ключи PDM", "0x%04X" % val_from(frame, 65, 2)])
+                        data.append(["PwrGd PDM", "0x%04X" % val_from(frame, 67, 2)])
+                        data.append(["Статус отказов PDM", "0x%08X" % val_from(frame, 69, 4)])
+                        #
+                        for i in range(4):
+                            data.append([f"T PDM{i}, °C", "%d" % val_from(frame, 73+i, 1, signed=True)])
+                        data.append([f"T PDM median, °C", "%d" % val_from(frame, 73+4, 1, signed=True)])
+                        #
+                        for i in range(6):
+                            data.append([f"U PDM{i}, mV", "%d" % val_from(frame, 78+2*i, 2, signed=False)])
+                            data.append([f"U PDM{i} mean, mV", "%d" % val_from(frame, 90+2*i, 2, signed=False)])
+                            data.append([f"I PDM{i}, mA", "%d" % val_from(frame, 102+2*i, 2, signed=True)])
+                            data.append([f"I PDM{i} mean, mA", "%d" % val_from(frame, 114+2*i, 2, signed=True)])
+                        #
+                        data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
+                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_brk_tmi_1:  # ТМИ солнечных панелей 1
+                        #
+                        data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
+                        data.append(["Время кадра, с", "%d" % val_from(frame, 8, 4)])
+                        #
+                        data.append(["Вер. ТМИ СЭС1 (PAM)", "%d" % val_from(frame, 12, 2)])
+                        data.append(["P полн. PAM, мВт", "%d" % val_from(frame, 14, 2)])
+                        data.append(["Ключи пит. PAM)", "0x%04X" % val_from(frame, 16, 2)])
+                        data.append(["PWR GD", "0x%04X" % val_from(frame, 18, 2)])
+                        data.append(["Статус отк.", "0x%08X" % val_from(frame, 20, 4)])
+                        #
+                        for i in range(4):
+                            data.append([f"T PAM{i}, °C", "%d" % val_from(frame, 24+i, 1, signed=True)])
+                        data.append([f"T median, °C", "%d" % val_from(frame, 24+4, 1, signed=True)])
+                        #
+                        data.append(["Ст. IdealDiod", "0x%04X" % val_from(frame, 29, 1)])
+                        data.append(["Ст. ош. входных к.", "0x%04X" % val_from(frame, 30, 1)])
+                        #
+                        name_list = ["Ch1 Y+", "Ch2 X+", "Ch3 Y-", "Ch4 X-", "Ch5 X- F", "Ch6 Y+ F"]
+                        for i, name in enumerate(name_list):
+                            data.append([f"U {name}, mV", "%d" % val_from(frame, 31 + 2*i, 2)])
+                            data.append([f"I {name}, mA", "%d" % val_from(frame, 43 + 2*i, 2, signed=True)])
+                        #
+                        name_list = ["Ch1 X- F", "Ch2 X-", "Ch3 X+ F", "Ch4 X+", "Ch5 Y+", "Ch6 Y-"]
+                        for i, name in enumerate(name_list):
+                            data.append([f"Статус {name}", "0x%04X" % val_from(frame, 55 + 2*i, 2)])
+                        #
+                        name_list = ["Ch1 X- F", "Ch2 X-", "Ch3 X+ F", "Ch4 X+", "Ch5 Y+", "Ch6 Y-"]
+                        for i, name in enumerate(name_list):
+                            for j in range(4):
+                                data.append([f"T {name} к{j}, °C", "%d" % val_from(frame, 67 + j + 4*i, 1, signed=True)])
+                        #
+                        name_list = ["Ch1 X- F", "Ch2 X-", "Ch3 X+ F", "Ch4 X+", "Ch5 Y+", "Ch6 Y-"]
+                        for i, name in enumerate(name_list):
+                                data.append([f"T median {name}, °C", "%d" % val_from(frame, 91 + i, 1, signed=True)])
+                        #
+                        data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
+                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_brk_tmi_2:  # ТМИ батарей 1
+                        #
+                        data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
+                        data.append(["Время кадра, с", "%d" % val_from(frame, 8, 4)])
+                        #
+                        data.append(["Вер. ТМИ СЭС2 (PBM ч1)", "%d" % val_from(frame, 12, 2)])
+                        #
+                        data.append(["P зар/раз, мВт", "%d" % val_from(frame, 14, 2, signed=True)])
+                        data.append(["P нагр, мВт", "%d" % val_from(frame, 16, 2)])
+                        data.append(["Заряд, mAh", "%d" % val_from(frame, 18, 2)])
+                        data.append(["Заряд, %", "%d" % val_from(frame, 20, 1)])
+                        data.append(["Кл. зар/раз", "0x%04X" % val_from(frame, 21, 2)])
+                        data.append(["Кл. термост", "0x%02X" % val_from(frame, 23, 1)])
+                        data.append(["Кл. нагр. PBM", "0x%02X" % val_from(frame, 24, 1)])
+                        data.append(["Кл. ав.зар.", "0x%02X" % val_from(frame, 25, 1)])
+                        data.append(["Автокорр. зар.", "0x%02X" % val_from(frame, 26, 1)])
+                        #
+                        for i in range(4):
+                            data.append([f"Ош.PBM{i}", "0x%04X" % val_from(frame, 27+2*i, 2)])
+                        for i in range(4):
+                            data.append([f"Ош.контр.1 PBM{i}", "0x%04X" % val_from(frame, 35+4*i, 2)])
+                            data.append([f"Ош.контр.2 PBM{i}", "0x%04X" % val_from(frame, 37+4*i, 2)])
+                        for i in range(4):
+                            data.append([f"Ур.зар. в.1 PBM{i}, %", "%d" % val_from(frame, 51+2*i, 1)])
+                            data.append([f"Ур.зар. в.2 PBM{i}, %", "%d" % val_from(frame, 52+2*i, 1)])
+                        for i in range(4):
+                            data.append([f"Ур.зар. в.1 PBM{i}, mAh", "%d" % val_from(frame, 59+4*i, 2)])
+                            data.append([f"Ур.зар. в.2 PBM{i}, mAh", "%d" % val_from(frame, 61+4*i, 2)])
+                        for i in range(4):
+                            data.append([f"I зар. в.1 PBM{i}, mA", "%d" % val_from(frame, 75+4*i, 2, signed=True)])
+                            data.append([f"I зар. в.2 PBM{i}, mA", "%d" % val_from(frame, 77+4*i, 2, signed=True)])
+                        for i in range(4):
+                            data.append([f"T PBM{i} кнтр.1, °C", "%d" % val_from(frame, 91+6*i, 1, signed=True)])
+                            data.append([f"T PBM{i} кнтр.2, °C", "%d" % val_from(frame, 92+6*i, 1, signed=True)])
+                            for j in range(4):
+                                data.append([f"T PBM{i} пл.{j}, °C", "%d" % val_from(frame, 93+1*j+6*i, 1, signed=True)])
+                        #
+                        data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
+                    elif get_id_loc_data(val_from(frame, 4, 2))["data_code"] == pl_brk_tmi_3:  # ТМИ батарей 2
+                        #
+                        data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
+                        data.append(["SAT_ID", "0x%04X" % val_from(frame, 2, 2)])
+                        data.append(["Определитель", "0x%04X" % val_from(frame, 4, 2)])
+                        data.append(["Номер кадра, шт", "%d" % val_from(frame, 6, 2)])
+                        data.append(["Время кадра, с", "%d" % val_from(frame, 8, 4)])
+                        #
+                        data.append(["Вер. ТМИ СЭС3 (PBM ч2)", "%d" % val_from(frame, 12, 2)])
+                        #
+                        for i in range(4):
+                            for j in range(2):
+                                for k in range(2):
+                                    data.append([f"U PBM{i} в{j} акк{k}, мВ", "%d" % val_from(frame, 14 + k*2 + j*4 + 8*i, 2)])
+                        #
+                        for i in range(4):
+                            for j in range(2):
+                                    data.append([f"I max PBM{i} в{j}, мA", "%d" % val_from(frame, 46 + j*4 + 8*i, 2, signed=True)])
+                                    data.append([f"I min PBM{i} в{j}, мA", "%d" % val_from(frame, 48 + j*4 + 8*i, 2, signed=True)])
+                        #
+                        for i in range(4):
+                            for j in range(2):
+                                    data.append([f"Ubat min PBM{i} в{j}, мВ", "%d" % val_from(frame, 78 + j*2 + 4*i, 2)])
+                        #
+                        for i in range(4):
+                            for j in range(2):
+                                    data.append([f"I нагр PBM{i} в{j}, мA", "%d" % val_from(frame, 94 + j*2 + 4*i, 2, signed=True)])
+                        #
+                        for i in range(4):
+                            for j in range(2):
+                                    data.append([f"Возраст PBM{i} в{j}", "%d" % val_from(frame, 110 + j*1 + 2*i, 1)])
+                        #
+                        for i in range(4):
+                            for j in range(2):
+                                    data.append([f"Кол-во циклов PBM{i} в{j}", "%d" % val_from(frame, 118 + j*1 + 2*i, 1)])
+                        #
+                        data.append(["CRC-16", "0x%04X" % crc16_calc(frame, 128)])
                 else:
                     #
                     data.append(["Метка кадра", "0x%04X" % val_from(frame, 0, 2)])
