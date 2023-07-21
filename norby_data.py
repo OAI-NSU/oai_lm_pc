@@ -170,8 +170,8 @@ def frame_parcer(frame):
                         #
                         data.append([f"{pl}:F/C", "0x%04X" % val_from(frame, 30+0, 2)])
                         data.append([f"{pl}:state", "0x%04X" % val_from(frame, 30+36, 2)])
-                        data.append([f"{pl}:temp0", "%d" % (val_from(frame, 30+38, 1, signed=True) + 160)])
-                        data.append([f"{pl}:temp1", "%d" % (val_from(frame, 30+39, 1, signed=True) + 160)])
+                        data.append([f"{pl}:temp0", "%d" % (val_from(frame, 30+38, 1, signed=False) + 160 - 273)])
+                        data.append([f"{pl}:temp1", "%d" % (val_from(frame, 30+39, 1, signed=False) + 160 - 273)])
                         data.append([f"{pl}:raddr", "%d" % (val_from(frame, 30+64, 2, signed=False))])
                         data.append([f"{pl}:eaddr", "%d" % (val_from(frame, 30+66, 2, signed=False))])
                         #

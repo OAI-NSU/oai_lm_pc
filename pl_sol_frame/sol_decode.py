@@ -4,6 +4,7 @@ import numpy as np
 import csv
 # from astropy.io import fits
 import matplotlib.pyplot as plt
+import re
 
 def read_bit(byte_str, value, byte_ind, bit_ind, buf):
     if bit_ind ==0:
@@ -80,10 +81,22 @@ if in_ext == '.bin':
     with open(infile, "rb") as f:
         frames = f.read()
 elif in_ext == '.txt':
+    frame_pattern = re.compile(r"((0F\s{,1}F1|F1\s{,1}0F)(\s[0-9a-fA-F]{2}\s{,1}[0-9a-fA-F]{2}){63})")
     with open(infile, "r") as f:
         frames_txt = f.read()
-    frames_txt = frames_txt.replace('XX','')
-    frames = bytes.fromhex(frames_txt)
+    result = frame_pattern.findall(frames_txt)
+    frame_result = ""
+    for var in result:
+        res = var[0].replace("\n", "").split(" ")
+        str_result = ""
+        for i in range(len(res)//2):
+            str_result += res[2*i+1] + res[2*i] + " "
+        str_result += "\n"
+        frame_result += str_result
+    frame_txt = frame_result
+    frames_txt = frames_txt.replace('XX','').replace(" ", "").replace("\n", "")
+    frames = bytes.fromhex(frame_txt)
+    print(frames[:128])
 else:
     raise Exception('Input must be either binary (*.bin) or text (*.txt)')
 
@@ -96,7 +109,7 @@ exp_vals = [0, 50, 63, 80, 100, 125, 160, 200, 250, 320, 400, 500, 630, 800, 100
 
 fr_start_mask = ((frarr[:-5] == 0x0F) & (frarr[1:-4] == 0xF1) &
                  (frarr[2:-3] == 0x00) & (frarr[3:-2] == 0x02) & 
-                 (frarr[4:-1] == 0x60) & (frarr[5:] == 0x90))
+                 (frarr[4:-1] == 0x60) & (frarr[5:] == 0x91))
 fr_start_ind = np.where(fr_start_mask)[0]
 
 telemerty = []
