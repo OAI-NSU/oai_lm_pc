@@ -82,7 +82,7 @@ if in_ext == '.bin':
         frames = f.read()
 elif in_ext == '.txt':
     frame_pattern = re.compile(r"((0F\s{,1}F1|F1\s{,1}0F)(\s[0-9a-fA-F]{2}\s{,1}[0-9a-fA-F]{2}){63})")
-    with open(infile, "r") as f:
+    with open(infile, "r", encoding='utf-8') as f:
         frames_txt = f.read()
     result = frame_pattern.findall(frames_txt)
     frame_result = ""
